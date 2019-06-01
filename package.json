@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "compression": "^1.7.3",
     "cross-fetch": "^2.2.3",
     "date-fns": "^1.30.1",
