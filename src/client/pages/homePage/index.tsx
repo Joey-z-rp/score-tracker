@@ -6,11 +6,13 @@ import { loadData } from "../../actions/load";
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    load: () => dispatch(loadData()),
+});
 
 class HomePage extends React.Component<any> {
     componentDidMount() {
-        loadData();
+        this.props.load();
     }
 
     render() {

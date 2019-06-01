@@ -1,7 +1,7 @@
-import fetch from '../../common/utils/fetch';
+import dataFetcher from '../hexSystemsDataFetcher';
 
 export const load = async (req, res) => {
-    const result = {};
+    const result = await dataFetcher();
 
-    res.json(result);
+    res.send(result);
 };
