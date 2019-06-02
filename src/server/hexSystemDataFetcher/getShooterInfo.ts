@@ -3,7 +3,7 @@ import fetch from 'cross-fetch';
 
 import {
     HEX_SYSTEM_BASE_URL,
-    NUMBER_OF_RESULTS_DESC,
+    NUMBER_OF_RESULTS_KEY,
     SHOOTER_INFO_DESCRIPTION_MAP,
 } from './constants';
 
@@ -19,10 +19,8 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
             const shooterInfo = getDataFromShooterInfoTable($);
             const resultIds = getResultIds($);
             
-            const numberOfResults = parseInt(
-                shooterInfo[SHOOTER_INFO_DESCRIPTION_MAP[NUMBER_OF_RESULTS_DESC]],
-                10,
-            );
+            const numberOfResults = shooterInfo[NUMBER_OF_RESULTS_KEY];
+            
             if (numberOfResults !== resultIds.length) {
                 throw new Error('Number of results does not match the length of result ids');
             }
@@ -49,15 +47,23 @@ function getDataFromShooterInfoTable($: CheerioStatic) {
         shooterInfo[key] = value;
     });
 
+    const numberOfResults = parseInt(
+        shooterInfo[NUMBER_OF_RESULTS_KEY],
+        10,
+    );
+    shooterInfo[NUMBER_OF_RESULTS_KEY] = numberOfResults;
+
     return shooterInfo;
 }
 
 function getResultIds($: CheerioStatic) {
     const resultTable = $('tbody', 'div#short-shootings-list');
     const resultRows = resultTable.find('tr');
-    const resultIds: string[] = resultRows.map((index, row) =>
+    const resultIdsInString: string[] = resultRows.map((index, row) =>
         ($(row).attr('id').match(/shooting-(.*)/) || [])[1])
         .get();
+    const resultIds = resultIdsInString.map(id => Number(id))
+        .filter(id => !isNaN(id));
     
     return resultIds;
 }
