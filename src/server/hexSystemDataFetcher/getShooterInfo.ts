@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import fetch from 'cross-fetch';
 
 import {
@@ -35,14 +35,12 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
         });
 };
 
-function getDataFromShooterInfoTable(cheerioDOM) {
-    const $ = cheerioDOM;
-
+function getDataFromShooterInfoTable($: CheerioStatic) {
     const shooterInfoTableRows = $('table#w0').find('tr');
     const shooterInfo = {};
 
     shooterInfoTableRows.each((index, row) => {
-        const description = $(row).children('th').text().toLowerCase();
+        const description = $(row).children('th').text().trim().toLowerCase();
 
         if (!SHOOTER_INFO_DESCRIPTION_MAP[description]) return;
 
@@ -54,9 +52,7 @@ function getDataFromShooterInfoTable(cheerioDOM) {
     return shooterInfo;
 }
 
-function getResultIds(cheerioDOM) {
-    const $ = cheerioDOM;
-
+function getResultIds($: CheerioStatic) {
     const resultTable = $('tbody', 'div#short-shootings-list');
     const resultRows = resultTable.find('tr');
     const resultIds: string[] = resultRows.map((index, row) =>
