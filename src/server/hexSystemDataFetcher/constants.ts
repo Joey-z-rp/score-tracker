@@ -74,3 +74,18 @@ export const SHOOTING_INFO_DESCRIPTION_MAP = {
     [Y_SIZE_IN_MM_DESC]: Y_SIZE_IN_MM_KEY,
     [DELAY_DESC]: DELAY_KEY,
 };
+
+// Shooting result details
+export const RESULT_NUMBER_DESC = '#';
+export const RESULT_X_DESC = 'x (mm)';
+export const RESULT_Y_DESC = 'y (mm)';
+export const RESULT_SCORE_DESC = 'score';
+export const RESULT_TEMPERATURE_DESC = '°c';
+export const RESULT_SHOT_TIME_DESC = 'shot time';
+
+export const RESULT_NUMBER_KEY = 'resultNumber';
+export const RESULT_X_KEY = 'resultXInMM';
+export const RESULT_Y_KEY = 'resultYInMM';
+export const RESULT_SCORE_KEY = 'score';
+export const RESULT_TEMPERATURE_KEY = 'temperature';
+export const RESULT_SHOT_TIME_KEY = 'shotTime';

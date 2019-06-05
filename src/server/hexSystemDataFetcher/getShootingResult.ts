@@ -26,10 +26,12 @@ export const getShootingResult = (resultId: number): Promise<any> => {
             const $ = cheerio.load(html);
             const headerInfo = getHeaderInfo($);
             const shootingInfo = getShootingInfo($);
+            const shootingResultDetails = getShootingResultDetails($);
 
             return {
                 ...headerInfo,
                 ...shootingInfo,
+                ...shootingResultDetails,
             };
         });
 };
@@ -101,4 +103,14 @@ function getProcessedShootingInfo(rawShootingInfo) {
     });
 
     return shootingInfo;
+}
+
+function getShootingResultDetails($: CheerioStatic) {
+    const scoreString = $('#score-string', 'h2').text();
+    const scoreNumber = $('#score-num', 'h2').text();
+    
+    return {
+        scoreNumber,
+        scoreString,
+    };
 }
