@@ -8,6 +8,10 @@ import {
     EDGE_SHOT_TWO_KEY,
     GROUP_SIZE_IN_MM_KEY,
     GROUP_SIZE_RAW_DATA_KEY,
+    RESULT_DETAILS_DESCRIPTION_MAP,
+    RESULT_DETAILS_TEMPERATURE_KEY,
+    RESULT_DETAILS_X_KEY,
+    RESULT_DETAILS_Y_KEY,
     SHOOTING_INFO_DESCRIPTION_MAP,
     SHOTS_COUNT_KEY,
     SIGHTERS_COUNT_KEY,
@@ -108,9 +112,46 @@ function getProcessedShootingInfo(rawShootingInfo) {
 function getShootingResultDetails($: CheerioStatic) {
     const scoreString = $('#score-string', 'h2').text();
     const scoreNumber = $('#score-num', 'h2').text();
+    const results = getShootingScoreResults($);
+    const totalItems = Number($('b', 'div.summary').text());
     
+    if (results.length !== totalItems) {
+        throw new Error('Length of score results does not match total number');
+    }
+
     return {
+        results,
         scoreNumber,
         scoreString,
     };
+}
+
+function getShootingScoreResults($: CheerioStatic) {
+    const tableHeaders = $('th', '#shots-grid thead:first-of-type tr');
+    const keysFromTableHead: string[] = tableHeaders.map((index, th) => {
+        const description = $(th).text().toLocaleLowerCase();
+
+        return RESULT_DETAILS_DESCRIPTION_MAP[description];
+    }).get();
+    const convertToNumberKeys = [
+        RESULT_DETAILS_TEMPERATURE_KEY,
+        RESULT_DETAILS_X_KEY,
+        RESULT_DETAILS_Y_KEY,
+    ];
+    const resultRows = $('tr', '#shots-grid tbody');
+
+    return resultRows.map((index, row) => {
+        const result = {};
+
+        $(row).find('td').each((index, td) => {
+            const key = keysFromTableHead[index];
+            const rawValue = $(td).text();
+            const value = convertToNumberKeys.includes(key)
+                ? Number(rawValue)
+                : rawValue;
+            result[key] = value;
+        });
+
+        return result;
+    }).get();
 }
