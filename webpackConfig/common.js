@@ -34,6 +34,9 @@ const server = {
             },
         ],
     },
+    externals: {
+        knex: 'commonjs knex',
+    },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
     },
