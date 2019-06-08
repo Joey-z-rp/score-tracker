@@ -27,6 +27,9 @@
     "lint": "tslint -c tslint.json -p .",
     "test": "npm run lint && jest",
     "test-jest": "jest",
+    "migrate:make": "knex migrate:make",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
