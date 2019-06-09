@@ -10,7 +10,7 @@ export const GRADE_CLUB_F_STD_DESC = 'grade (club) f-std';
 export const GRADE_CLUB_F_OPEN_DESC = 'grade (club) f-open';
 export const GRADE_CLUB_F_TR_DESC = 'grade (club) f-tr';
 
-export const NICK_NAME_KEY = 'nick name';
+export const NICK_NAME_KEY = 'nickName';
 export const CLUB_KEY = 'club';
 export const DEFAULT_DISCIPLINE_KEY = 'defaultDiscipline';
 export const NUMBER_OF_RESULTS_KEY = 'numberOfResult';

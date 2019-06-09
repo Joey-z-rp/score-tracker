@@ -22,7 +22,8 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
             const numberOfResults = shooterInfo[NUMBER_OF_RESULTS_KEY];
             
             if (numberOfResults !== resultIds.length) {
-                throw new Error('Number of results does not match the length of result ids');
+                throw new Error(`Number of results(${numberOfResults}) does not 
+                match the length of result ids(${resultIds.length})`);
             }
             
             return {

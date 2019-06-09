@@ -12,6 +12,7 @@ import {
     RESULT_DETAILS_TEMPERATURE_KEY,
     RESULT_DETAILS_X_KEY,
     RESULT_DETAILS_Y_KEY,
+    SHOOTER_ID_KEY,
     SHOOTING_INFO_DESCRIPTION_MAP,
     SHOTS_COUNT_KEY,
     SIGHTERS_COUNT_KEY,
@@ -84,6 +85,7 @@ function getProcessedShootingInfo(rawShootingInfo) {
                 shootingInfo[key] = Number(numberWithoutUnit);
                 break;
 
+            case SHOOTER_ID_KEY:
             case SHOTS_COUNT_KEY:
             case SIGHTERS_COUNT_KEY:
             case STAGE_KEY:
