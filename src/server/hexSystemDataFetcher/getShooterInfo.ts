@@ -17,18 +17,9 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
 
             const name = $('h1', 'header').text();
             const shooterInfo = getDataFromShooterInfoTable($);
-            const resultIds = getResultIds($);
-            
-            const numberOfResults = shooterInfo[NUMBER_OF_RESULTS_KEY];
-            
-            if (numberOfResults !== resultIds.length) {
-                throw new Error(`Number of results(${numberOfResults}) does not 
-                match the length of result ids(${resultIds.length})`);
-            }
             
             return {
                 name,
-                resultIds,
                 ...shooterInfo,
             };
         });
@@ -55,16 +46,4 @@ function getDataFromShooterInfoTable($: CheerioStatic) {
     shooterInfo[NUMBER_OF_RESULTS_KEY] = numberOfResults;
 
     return shooterInfo;
-}
-
-function getResultIds($: CheerioStatic) {
-    const resultTable = $('tbody', 'div#short-shootings-list');
-    const resultRows = resultTable.find('tr');
-    const resultIdsInString: string[] = resultRows.map((index, row) =>
-        ($(row).attr('id').match(/shooting-(.*)/) || [])[1])
-        .get();
-    const resultIds = resultIdsInString.map(id => Number(id))
-        .filter(id => !isNaN(id));
-    
-    return resultIds;
 }
