@@ -3,7 +3,7 @@ import * as express from 'express';
 import expressPromiseRouter from 'express-promise-router';
 import * as knex from 'knex';
 import * as path from 'path';
-import { load } from './api/load';
+import { syncShooter } from './api/synchronizeData';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,7 +20,7 @@ app.listen(port);
 router.use(compression());
 
 // API
-router.get('/api/load', load);
+router.get('/api/syncShooterData', syncShooter);
 
 router.use('/public', express.static(path.join(__dirname, 'public')));
 router.use('*', express.static(path.join(__dirname, 'public')));

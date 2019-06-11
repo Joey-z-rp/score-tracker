@@ -2,21 +2,21 @@ import fetch from '../../common/utils/fetch';
 
 // action types
 
-export const LOAD = 'LOAD';
+export const SYNC_SHOOTER = 'SYNC_SHOOTER';
 
 // action creators
 
-export function loadAction() {
+export function syncShooterAction() {
     return {
-        type: LOAD,
+        type: SYNC_SHOOTER,
     };
 }
 
 // async actions
 
-export function loadData() {
+export function syncShooterData(shooterId: number) {
     return (dispatch, getState) => {
-        const url = '/api/load';
+        const url = `/api/syncShooterData?shooterId=${shooterId}`;
 
         return fetch(url)
             .then((response: any) => console.log(response))

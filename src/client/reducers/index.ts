@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import load from './load';
+import synchronizeData from './synchronizeData';
 
 export default combineReducers({
-    load,
+    synchronizeData,
 });

@@ -1,6 +1,6 @@
 import {
-    LOAD,
-} from '../actions/load';
+    SYNC_SHOOTER,
+} from '../actions/synchronizeData';
 import { IAction } from '../interfaces/actions';
 
 const initialState = {
@@ -13,7 +13,7 @@ export default function reducer(
 ): any {
     switch (action.type) {
 
-        case LOAD:
+        case SYNC_SHOOTER:
             return {
                 ...state,
             };
