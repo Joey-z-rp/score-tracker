@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
         table.string('gradeClubFStd');
         table.string('gradeClubFTR');
         table.string('gradeClubTRifle');
+        table.string('syncStatus');
         table.timestamps();
     })
     .createTable('shootingResults', function(table) {
