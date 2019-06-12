@@ -22,7 +22,7 @@ import {
     Y_SIZE_IN_MM_KEY,
 } from './constants';
 
-export const getShootingResult = (resultId: number): Promise<any> => {
+export const getShootingResult = (resultId: string): Promise<any> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooting/${resultId}`;
 
     return fetch(url)

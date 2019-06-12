@@ -17,6 +17,6 @@ export const getResultIds = (shooterId: number, pageNumber: number): Promise<any
             const resultIds: string[] = resultRows.map((index, row) => $(row).attr('data-key'))
                 .get();
             
-            return { resultIds };
+            return resultIds;
         });
 };
