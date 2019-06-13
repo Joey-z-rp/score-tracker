@@ -41,7 +41,7 @@ exports.up = function(knex, Promise) {
         table.datetime('updatedAt');
     })
     .createTable('shootingResultDetails', function(table) {
-        table.integer('shootingId').notNull().primary();
+        table.integer('shootingResultId').notNull().primary();
         table.string('resultNumber');
         table.decimal('resultXInMM');
         table.decimal('resultYInMM');

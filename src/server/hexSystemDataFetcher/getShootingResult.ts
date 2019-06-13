@@ -120,21 +120,21 @@ function getProcessedShootingInfo(rawShootingInfo) {
 function getShootingResultDetails($: CheerioStatic) {
     const scoreString = $('#score-string', 'h2').text();
     const scoreNumber = $('#score-num', 'h2').text();
-    const results = getShootingScoreResults($);
+    const scoreDetails = getShootingScoreDetails($);
     const totalItems = Number($('b', 'div.summary').text());
     
-    if (results.length !== totalItems) {
-        throw new Error('Length of score results does not match total number');
+    if (scoreDetails.length !== totalItems) {
+        throw new Error('Length of score details does not match total number');
     }
 
     return {
-        results,
+        scoreDetails,
         scoreNumber,
         scoreString,
     };
 }
 
-function getShootingScoreResults($: CheerioStatic) {
+function getShootingScoreDetails($: CheerioStatic) {
     const tableHeaders = $('th', '#shots-grid thead:first-of-type tr');
     const keysFromTableHead: string[] = tableHeaders.map((index, th) => {
         const description = $(th).text().toLocaleLowerCase();
