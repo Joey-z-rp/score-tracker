@@ -1,7 +1,6 @@
 import * as compression from 'compression';
 import * as express from 'express';
 import expressPromiseRouter from 'express-promise-router';
-import * as knex from 'knex';
 import * as path from 'path';
 import { syncShooter } from './api/synchronizeData';
 
@@ -27,16 +26,3 @@ router.use('*', express.static(path.join(__dirname, 'public')));
 
 // tslint:disable-next-line
 console.info(`Server is running on port: ${port}`);
-
-const pg = knex({
-    client: 'pg',
-    connection: {
-        host : '127.0.0.1',
-        user : 'joey',
-        password : '123456',
-        database : 'devdb',
-    },
-    debug: true,
-});
-
-pg.raw("SELECT VERSION()").then(res => console.log(res));

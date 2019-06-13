@@ -12,7 +12,8 @@ exports.up = function(knex, Promise) {
         table.string('gradeClubFTR');
         table.string('gradeClubTRifle');
         table.string('syncStatus');
-        table.timestamps();
+        table.datetime('createdAt');
+        table.datetime('updatedAt');
     })
     .createTable('shootingResults', function(table) {
         table.integer('shooterId').notNull().primary();
@@ -36,6 +37,8 @@ exports.up = function(knex, Promise) {
         table.integer('targetNumber').notNull();
         table.decimal('xSizeInMM').notNull();
         table.decimal('ySizeInMM').notNull();
+        table.datetime('createdAt');
+        table.datetime('updatedAt');
     })
     .createTable('shootingResultDetails', function(table) {
         table.integer('shootingId').notNull().primary();
@@ -45,9 +48,15 @@ exports.up = function(knex, Promise) {
         table.string('score');
         table.string('shotTime');
         table.decimal('temperature');
+        table.datetime('createdAt');
+        table.datetime('updatedAt');
     });
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('shooters');
+    return Promise.all([
+        knex.schema.dropTable('shooters'),
+        knex.schema.dropTable('shootingResults'),
+        knex.schema.dropTable('shootingResultDetails'),
+    ]);
 };

@@ -1,9 +1,11 @@
 import hexSystemdataFetcher from '../hexSystemDataFetcher';
 import { NUMBER_OF_RESULTS_KEY } from './../hexSystemDataFetcher/constants';
+import { Shooter } from '../models/shooter';
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
     const shooter = await getShooterInfo(shooterId);
+    // const result = await Shooter.create({ ...shooter, id: shooterId });
 
     const numberOfResults = shooter[NUMBER_OF_RESULTS_KEY];
     const numberOfResultsInDB = 0; // TODO: get real results count from db
