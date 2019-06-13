@@ -6,6 +6,7 @@ import {
     NUMBER_OF_RESULTS_KEY,
     SHOOTER_INFO_DESCRIPTION_MAP,
 } from './constants';
+import { is404 } from './utils';
 
 export const getShooterInfo = (shooterId: number): Promise<any> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooter/${shooterId}`;
@@ -14,6 +15,10 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
         .then(response => response.text())
         .then(html => {
             const $ = cheerio.load(html);
+
+            if (is404($)) {
+                throw new Error(`Error retrieving shooter information (id: ${shooterId})`);
+            }
 
             const name = $('h1', 'header').text();
             const shooterInfo = getDataFromShooterInfoTable($);

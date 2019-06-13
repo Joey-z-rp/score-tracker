@@ -21,6 +21,7 @@ import {
     X_SIZE_IN_MM_KEY,
     Y_SIZE_IN_MM_KEY,
 } from './constants';
+import { is404 } from './utils';
 
 export const getShootingResult = (resultId: string): Promise<any> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooting/${resultId}`;
@@ -29,6 +30,11 @@ export const getShootingResult = (resultId: string): Promise<any> => {
         .then(response => response.text())
         .then(html => {
             const $ = cheerio.load(html);
+
+            if (is404($)) {
+                throw new Error(`Error retrieving shooting result (id: ${resultId})`);
+            }
+
             const headerInfo = getHeaderInfo($);
             const shootingInfo = getShootingInfo($);
             const shootingResultDetails = getShootingResultDetails($);
