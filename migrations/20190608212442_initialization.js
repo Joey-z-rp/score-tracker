@@ -17,7 +17,7 @@ exports.up = function(knex, Promise) {
     })
     .createTable('shootingResults', function(table) {
         table.integer('shootingResultId').notNull().primary();
-        table.integer('shooterId').notNull();
+        table.integer('shooterId').references('id').inTable('shooters');
         table.decimal('berdanStringInMM');
         table.string('competitionClub');
         table.datetime('date').notNull();
@@ -42,8 +42,9 @@ exports.up = function(knex, Promise) {
         table.datetime('updatedAt');
     })
     .createTable('shootingResultDetails', function(table) {
-        table.integer('shootingResultId').notNull().primary();
-        table.string('resultNumber');
+        table.primary(['shootingResultId', 'resultNumber']);
+        table.integer('shootingResultId').references('shootingResultId').inTable('shootingResults');
+        table.string('resultNumber').notNull();
         table.decimal('resultXInMM');
         table.decimal('resultYInMM');
         table.string('score');

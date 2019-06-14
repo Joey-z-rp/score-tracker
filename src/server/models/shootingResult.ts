@@ -9,6 +9,7 @@ export class ShootingResult {
             ...result,
         }));
 
-        return pg.batchInsert('shootingResults', resultsWithTimestamp).returning('shooterId');
+        return pg.batchInsert('shootingResults', resultsWithTimestamp)
+            .returning('shootingResultId');
     }
 }

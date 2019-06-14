@@ -2,11 +2,12 @@ import hexSystemdataFetcher from '../hexSystemDataFetcher';
 import { NUMBER_OF_RESULTS_KEY } from './../hexSystemDataFetcher/constants';
 import { Shooter } from '../models/shooter';
 import { ShootingResult } from '../models/shootingResult';
+import { ShootingResultDetail } from '../models/shootingResultDetail';
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
     const shooter = await getShooterInfo(shooterId);
-    // const result = await Shooter.create({ ...shooter, id: shooterId });
+    const shooterInsert = await Shooter.create({ ...shooter, id: shooterId });
 
     const numberOfResults = shooter[NUMBER_OF_RESULTS_KEY];
     const numberOfResultsInDB = 0; // TODO: get real results count from db
@@ -31,7 +32,8 @@ export const syncShooter = async (req, res) => {
         };
     });
 
-    await ShootingResult.batchCreate(results);
+    const shootingResultInsert = await ShootingResult.batchCreate(results);
+    const shootingResultDetailInsert = await ShootingResultDetail.batchCreate(allScoreDetails);
 
     res.json({
         allScoreDetails,
@@ -39,6 +41,9 @@ export const syncShooter = async (req, res) => {
         shooterId,
         results,
         resultIds,
+        shooterInsert,
+        shootingResultInsert,
+        shootingResultDetailInsert,
     });
 };
 
