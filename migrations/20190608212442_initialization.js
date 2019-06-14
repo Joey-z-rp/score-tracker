@@ -16,10 +16,11 @@ exports.up = function(knex, Promise) {
         table.datetime('updatedAt');
     })
     .createTable('shootingResults', function(table) {
-        table.integer('shooterId').notNull().primary();
+        table.integer('shootingResultId').notNull().primary();
+        table.integer('shooterId').notNull();
         table.decimal('berdanStringInMM');
         table.string('competitionClub');
-        table.date('date').notNull();
+        table.datetime('date').notNull();
         table.string('delay');
         table.string('discipline');
         table.string('distance');

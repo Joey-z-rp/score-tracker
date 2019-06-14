@@ -25,10 +25,13 @@ export const syncShooter = async (req, res) => {
 
         delete result.scoreDetails;
 
-        return result;
+        return {
+            ...result,
+            shootingResultId: resultIds[index],
+        };
     });
 
-    // await ShootingResult.batchCreate(results);
+    await ShootingResult.batchCreate(results);
 
     res.json({
         allScoreDetails,

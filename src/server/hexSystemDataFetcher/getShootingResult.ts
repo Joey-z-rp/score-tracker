@@ -1,5 +1,11 @@
 import * as cheerio from 'cheerio';
 import fetch from 'cross-fetch';
+import { parse, format } from 'date-fns';
+
+import {
+    HEX_DATE_TIME_PARSE_FORMAT,
+    STANDARD_DATE_TIME_FORMAT,
+} from '../../common/constants/date';
 
 import {
     HEX_SYSTEM_BASE_URL,
@@ -54,11 +60,14 @@ function getHeaderInfo($: CheerioStatic) {
     const [discipline, grade] = disciplineAndGrade.split('/');
     
     return {
-        date,
         discipline,
         distance,
         grade,
         name,
+        date: format(
+            parse(date, HEX_DATE_TIME_PARSE_FORMAT, new Date()),
+            STANDARD_DATE_TIME_FORMAT,
+        ),
     };
 }
 
