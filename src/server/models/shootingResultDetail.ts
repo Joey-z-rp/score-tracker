@@ -1,13 +1,8 @@
-import { format } from 'date-fns';
-import { pg } from './utils';
-import { STANDARD_DATE_TIME_FORMAT } from '../../common/constants/date';
+import { createTimestamps, pg } from './utils';
 
 export class ShootingResultDetail {
     static batchCreate(resultDetails) {
-        const resultDetailsWithTimestamp = resultDetails.map(resultDetail => ({
-            createdAt: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
-            ...resultDetail,
-        }));
+        const resultDetailsWithTimestamp = createTimestamps(resultDetails);
 
         return pg.batchInsert('shootingResultDetails', resultDetailsWithTimestamp)
             .returning(['shootingResultId', 'resultNumber']);

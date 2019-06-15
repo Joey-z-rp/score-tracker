@@ -56,9 +56,7 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return Promise.all([
-        knex.schema.dropTable('shooters'),
-        knex.schema.dropTable('shootingResults'),
-        knex.schema.dropTable('shootingResultDetails'),
-    ]);
+    return knex.schema.dropTable('shootingResultDetails')
+        .then(() => knex.schema.dropTable('shootingResults'))
+        .then(() => knex.schema.dropTable('shooters'));
 };

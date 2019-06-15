@@ -1,8 +1,7 @@
 import hexSystemdataFetcher from '../hexSystemDataFetcher';
 import { NUMBER_OF_RESULTS_KEY } from './../hexSystemDataFetcher/constants';
 import { Shooter } from '../models/shooter';
-import { ShootingResult } from '../models/shootingResult';
-import { ShootingResultDetail } from '../models/shootingResultDetail';
+import { ShootingResultAndDetail } from '../models/shootingResultAndDetail';
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
@@ -32,8 +31,10 @@ export const syncShooter = async (req, res) => {
         };
     });
 
-    const shootingResultInsert = await ShootingResult.batchCreate(results);
-    const shootingResultDetailInsert = await ShootingResultDetail.batchCreate(allScoreDetails);
+    await ShootingResultAndDetail.batchCreate(results, allScoreDetails);
+
+    // const shootingResultInsert = await ShootingResult.batchCreate(results);
+    // const shootingResultDetailInsert = await ShootingResultDetail.batchCreate(allScoreDetails);
 
     res.json({
         allScoreDetails,
@@ -42,8 +43,6 @@ export const syncShooter = async (req, res) => {
         results,
         resultIds,
         shooterInsert,
-        shootingResultInsert,
-        shootingResultDetailInsert,
     });
 };
 
