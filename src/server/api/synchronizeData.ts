@@ -2,9 +2,13 @@ import hexSystemdataFetcher from '../hexSystemDataFetcher';
 import { NUMBER_OF_RESULTS_KEY } from './../hexSystemDataFetcher/constants';
 import { Shooter } from '../models/shooter';
 import { ShootingResultAndDetail } from '../models/shootingResultAndDetail';
+import { ShootingResult } from '../models/shootingResult'
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
+    // const count = await ShootingResult.getResultCount(shooterId);
+    // const dbShooter = await Shooter.get(shooterId);
+    // const ids = await ShootingResult.getRestultIds(shooterId);
     const shooter = await getShooterInfo(shooterId);
     const shooterInsert = await Shooter.create({ ...shooter, id: shooterId });
 
@@ -14,7 +18,7 @@ export const syncShooter = async (req, res) => {
 
     const resultIds = await getResultIds(shooterId, numberOfResults);
 
-    const rawResults = await getShootingResults(resultIds);
+    const rawResults = await getShootingResults(resultIds);fd
     let allScoreDetails: any[] = [];
     const results = rawResults.map((result, index) => {
         const scoreDetails = result.scoreDetails.map(scoreDetail => ({
