@@ -11,6 +11,6 @@ export class Shooter {
     }
 
     static get(shooterId: number) {
-        return pg(SHOOTERS_TABLE).where({ id: shooterId });
+        return pg(SHOOTERS_TABLE).where({ [SHOOTER_ID_KEY]: shooterId });
     }
 }

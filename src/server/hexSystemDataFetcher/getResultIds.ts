@@ -20,8 +20,12 @@ export const getResultIds = (shooterId: number, pageNumber: number): Promise<any
 
             const resultTable = $('tbody', 'div#shooting-grid');
             const resultRows = resultTable.find('tr');
-            const resultIds: string[] = resultRows.map((index, row) => $(row).attr('data-key'))
-                .get();
+            const resultIds: number[] = resultRows.map(
+                    (index, row) => Number($(row).attr('data-key'))
+                ).get();
+
+            const hasNaN = resultIds.some(id => typeof id !== 'number');
+            if (hasNaN) throw new Error('Not all result ids are number');
             
             return resultIds;
         });

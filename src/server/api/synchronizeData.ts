@@ -10,24 +10,29 @@ import { ShootingResult } from '../models/shootingResult'
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
-    // const count = await ShootingResult.getResultCount(shooterId);
-    // const dbShooter = await Shooter.get(shooterId);
-    // const ids = await ShootingResult.getRestultIds(shooterId);
     const shooter = await getShooterInfo(shooterId);
-    const shooterInsert = await Shooter.create({ ...shooter, [SHOOTER_ID_KEY]: shooterId });
+    const shooterInDB = await Shooter.get(shooterId);
+
+    if (shooterInDB.length === 0) {
+        await Shooter.create({ ...shooter, [SHOOTER_ID_KEY]: shooterId });
+    }
 
     const numberOfResults = shooter[NUMBER_OF_RESULTS_KEY];
-    const numberOfResultsInDB = 0; // TODO: get real results count from db
+    const numberOfResultsInDB = await ShootingResult.getResultCount(shooterId);
     if (numberOfResults === numberOfResultsInDB) return res.json({ status: 'up to date' });
 
-    const resultIds = await getResultIds(shooterId, numberOfResults);
+    const resultIdsInDB = numberOfResultsInDB !== 0
+        ? await ShootingResult.getRestultIds(shooterId)
+        : [];
+    const resultIdsInHex = await getResultIds(shooterId, numberOfResults);
+    const resultIdsToFetch = resultIdsInHex.filter(id => !resultIdsInDB.includes(id));
 
-    const rawResults = await getShootingResults(resultIds);
+    const rawResults = await getShootingResults(resultIdsToFetch);
     let allScoreDetails: any[] = [];
     const results = rawResults.map((result, index) => {
         const scoreDetails = result.scoreDetails.map(scoreDetail => ({
             ...scoreDetail,
-            [SHOOTING_RESULT_ID_KEY]: resultIds[index],
+            [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
         }));
         allScoreDetails = allScoreDetails.concat(scoreDetails);
 
@@ -35,22 +40,18 @@ export const syncShooter = async (req, res) => {
 
         return {
             ...result,
-            [SHOOTING_RESULT_ID_KEY]: resultIds[index],
+            [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
         };
     });
 
     await ShootingResultAndDetail.batchCreate(results, allScoreDetails);
-
-    // const shootingResultInsert = await ShootingResult.batchCreate(results);
-    // const shootingResultDetailInsert = await ShootingResultDetail.batchCreate(allScoreDetails);
 
     res.json({
         allScoreDetails,
         shooter,
         shooterId,
         results,
-        resultIds,
-        shooterInsert,
+        resultIdsToFetch,
     });
 };
 

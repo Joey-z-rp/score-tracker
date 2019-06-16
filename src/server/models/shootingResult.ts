@@ -16,7 +16,8 @@ export class ShootingResult {
     static getResultCount(shooterId: number) {
         return pg(SHOOTING_RESULTS_TABLE)
             .count(SHOOTING_RESULT_ID_KEY)
-            .where({ [SHOOTER_ID_KEY]: shooterId });
+            .where({ [SHOOTER_ID_KEY]: shooterId })
+            .then(result => Number(result[0].count));
     }
 
     static getRestultIds(shooterId: number) {
