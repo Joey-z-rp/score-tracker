@@ -3,29 +3,37 @@ import fetch from 'cross-fetch';
 import { parse, format } from 'date-fns';
 
 import {
-    HEX_DATE_TIME_PARSE_FORMAT,
-    STANDARD_DATE_TIME_FORMAT,
-} from '../../common/constants/date';
-
-import {
-    HEX_SYSTEM_BASE_URL,
     BERDAN_STRING_IN_MM_KEY,
+    DATE_KEY,
+    DISCIPLINE_KEY,
+    DISTANCE_KEY,
     EDGE_SHOT_ONE_KEY,
     EDGE_SHOT_TWO_KEY,
+    GRADE_KEY,
     GROUP_SIZE_IN_MM_KEY,
     GROUP_SIZE_RAW_DATA_KEY,
-    RESULT_DETAILS_DESCRIPTION_MAP,
+    NAME_KEY,
     RESULT_DETAILS_TEMPERATURE_KEY,
     RESULT_DETAILS_X_KEY,
     RESULT_DETAILS_Y_KEY,
     SHOOTER_ID_KEY,
-    SHOOTING_INFO_DESCRIPTION_MAP,
     SHOTS_COUNT_KEY,
     SIGHTERS_COUNT_KEY,
     STAGE_KEY,
     TARGET_NUMBER_KEY,
     X_SIZE_IN_MM_KEY,
     Y_SIZE_IN_MM_KEY,
+} from '../../common/constants/database';
+
+import {
+    HEX_DATE_TIME_PARSE_FORMAT,
+    STANDARD_DATE_TIME_FORMAT,
+} from '../../common/constants/date';
+
+import {
+    HEX_SYSTEM_BASE_URL,
+    RESULT_DETAILS_DESCRIPTION_MAP,
+    SHOOTING_INFO_DESCRIPTION_MAP,
 } from './constants';
 import { is404 } from './utils';
 
@@ -60,11 +68,11 @@ function getHeaderInfo($: CheerioStatic) {
     const [discipline, grade] = disciplineAndGrade.split('/');
     
     return {
-        discipline,
-        distance,
-        grade,
-        name,
-        date: format(
+        [DISCIPLINE_KEY]: discipline,
+        [DISTANCE_KEY]: distance,
+        [GRADE_KEY]: grade,
+        [NAME_KEY]: name,
+        [DATE_KEY]: format(
             parse(date, HEX_DATE_TIME_PARSE_FORMAT, new Date()),
             STANDARD_DATE_TIME_FORMAT,
         ),

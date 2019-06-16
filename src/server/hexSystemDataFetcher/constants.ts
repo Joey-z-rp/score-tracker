@@ -1,3 +1,32 @@
+import {
+    BERDAN_STRING_IN_MM_KEY,
+    CLUB_KEY,
+    COMPETITION_CLUB_KEY,
+    DEFAULT_DISCIPLINE_KEY,
+    DELAY_KEY,
+    GRADE_CLUB_F_OPEN_KEY,
+    GRADE_CLUB_F_STD_KEY,
+    GRADE_CLUB_F_TR_KEY,
+    GRADE_CLUB_T_RIFLE_KEY,
+    GROUP_SIZE_RAW_DATA_KEY,
+    NICK_NAME_KEY,
+    NICK_NAME_WITH_CLUB_KEY,
+    NUMBER_OF_RESULTS_KEY,
+    RESULT_DETAILS_NUMBER_KEY,
+    RESULT_DETAILS_SCORE_KEY,
+    RESULT_DETAILS_SHOT_TIME_KEY,
+    RESULT_DETAILS_TEMPERATURE_KEY,
+    RESULT_DETAILS_X_KEY,
+    RESULT_DETAILS_Y_KEY,
+    SHOOTER_ID_KEY,
+    SHOTS_COUNT_KEY,
+    SIGHTERS_COUNT_KEY,
+    STAGE_KEY,
+    TARGET_NUMBER_KEY,
+    X_SIZE_IN_MM_KEY,
+    Y_SIZE_IN_MM_KEY,
+} from '../../common/constants/database';
+
 export const HEX_SYSTEM_BASE_URL = 'http://shooting.hexsystems.com.au';
 
 // Shooter information
@@ -9,15 +38,6 @@ export const GRADE_CLUB_T_RIFLE_DESC = 'grade (club) t-rifle';
 export const GRADE_CLUB_F_STD_DESC = 'grade (club) f-std';
 export const GRADE_CLUB_F_OPEN_DESC = 'grade (club) f-open';
 export const GRADE_CLUB_F_TR_DESC = 'grade (club) f-tr';
-
-export const NICK_NAME_KEY = 'nickName';
-export const CLUB_KEY = 'club';
-export const DEFAULT_DISCIPLINE_KEY = 'defaultDiscipline';
-export const NUMBER_OF_RESULTS_KEY = 'numberOfResult';
-export const GRADE_CLUB_T_RIFLE_KEY = 'gradeClubTRifle';
-export const GRADE_CLUB_F_STD_KEY = 'gradeClubFStd';
-export const GRADE_CLUB_F_OPEN_KEY = 'gradeClubFOpen';
-export const GRADE_CLUB_F_TR_KEY = 'gradeClubFTR';
 
 export const SHOOTER_INFO_DESCRIPTION_MAP = {
     [NICK_NAME_DESC]: NICK_NAME_KEY,
@@ -44,22 +64,6 @@ export const X_SIZE_IN_MM_DESC = 'x size';
 export const Y_SIZE_IN_MM_DESC = 'y size';
 export const DELAY_DESC = 'delay';
 
-export const SHOOTER_ID_KEY = 'shooterId';
-export const COMPETITION_CLUB_KEY = 'competitionClub';
-export const NICK_NAME_WITH_CLUB_KEY = 'nickNameWithClub';
-export const STAGE_KEY = 'stage';
-export const TARGET_NUMBER_KEY = 'targetNumber';
-export const SHOTS_COUNT_KEY = 'shotsCount';
-export const SIGHTERS_COUNT_KEY = 'sightersCount';
-export const GROUP_SIZE_RAW_DATA_KEY = 'groupSizeRaw';
-export const GROUP_SIZE_IN_MM_KEY = 'groupSizeInMM';
-export const EDGE_SHOT_ONE_KEY = 'edgeShotOne';
-export const EDGE_SHOT_TWO_KEY = 'edgeShotTwo';
-export const BERDAN_STRING_IN_MM_KEY = 'berdanStringInMM';
-export const X_SIZE_IN_MM_KEY = 'xSizeInMM';
-export const Y_SIZE_IN_MM_KEY = 'ySizeInMM';
-export const DELAY_KEY = 'delay';
-
 export const SHOOTING_INFO_DESCRIPTION_MAP = {
     [SHOOTER_ID_DESC]: SHOOTER_ID_KEY,
     [COMPETITION_CLUB_DESC]: COMPETITION_CLUB_KEY,
@@ -82,13 +86,6 @@ export const RESULT_DETAILS_Y_DESC = 'y (mm)';
 export const RESULT_DETAILS_SCORE_DESC = 'score';
 export const RESULT_DETAILS_TEMPERATURE_DESC = '°с';
 export const RESULT_DETAILS_SHOT_TIME_DESC = 'shot time';
-
-export const RESULT_DETAILS_NUMBER_KEY = 'resultNumber';
-export const RESULT_DETAILS_X_KEY = 'resultXInMM';
-export const RESULT_DETAILS_Y_KEY = 'resultYInMM';
-export const RESULT_DETAILS_SCORE_KEY = 'score';
-export const RESULT_DETAILS_TEMPERATURE_KEY = 'temperature';
-export const RESULT_DETAILS_SHOT_TIME_KEY = 'shotTime';
 
 export const RESULT_DETAILS_DESCRIPTION_MAP = {
     [RESULT_DETAILS_NUMBER_DESC]: RESULT_DETAILS_NUMBER_KEY,

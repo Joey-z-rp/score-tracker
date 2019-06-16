@@ -3,10 +3,13 @@ import fetch from 'cross-fetch';
 
 import {
     HEX_SYSTEM_BASE_URL,
-    NUMBER_OF_RESULTS_KEY,
     SHOOTER_INFO_DESCRIPTION_MAP,
 } from './constants';
 import { is404 } from './utils';
+import {
+    NAME_KEY,
+    NUMBER_OF_RESULTS_KEY,
+} from '../../common/constants/database';
 
 export const getShooterInfo = (shooterId: number): Promise<any> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooter/${shooterId}`;
@@ -24,7 +27,7 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
             const shooterInfo = getDataFromShooterInfoTable($);
             
             return {
-                name,
+                [NAME_KEY]: name,
                 ...shooterInfo,
             };
         });

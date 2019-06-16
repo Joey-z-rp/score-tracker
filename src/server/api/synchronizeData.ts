@@ -1,5 +1,9 @@
 import hexSystemdataFetcher from '../hexSystemDataFetcher';
-import { NUMBER_OF_RESULTS_KEY } from './../hexSystemDataFetcher/constants';
+import {
+    NUMBER_OF_RESULTS_KEY,
+    SHOOTER_ID_KEY,
+    SHOOTING_RESULT_ID_KEY,
+} from '../../common/constants/database';
 import { Shooter } from '../models/shooter';
 import { ShootingResultAndDetail } from '../models/shootingResultAndDetail';
 import { ShootingResult } from '../models/shootingResult'
@@ -10,7 +14,7 @@ export const syncShooter = async (req, res) => {
     // const dbShooter = await Shooter.get(shooterId);
     // const ids = await ShootingResult.getRestultIds(shooterId);
     const shooter = await getShooterInfo(shooterId);
-    const shooterInsert = await Shooter.create({ ...shooter, id: shooterId });
+    const shooterInsert = await Shooter.create({ ...shooter, [SHOOTER_ID_KEY]: shooterId });
 
     const numberOfResults = shooter[NUMBER_OF_RESULTS_KEY];
     const numberOfResultsInDB = 0; // TODO: get real results count from db
@@ -18,12 +22,12 @@ export const syncShooter = async (req, res) => {
 
     const resultIds = await getResultIds(shooterId, numberOfResults);
 
-    const rawResults = await getShootingResults(resultIds);fd
+    const rawResults = await getShootingResults(resultIds);
     let allScoreDetails: any[] = [];
     const results = rawResults.map((result, index) => {
         const scoreDetails = result.scoreDetails.map(scoreDetail => ({
             ...scoreDetail,
-            shootingResultId: resultIds[index],
+            [SHOOTING_RESULT_ID_KEY]: resultIds[index],
         }));
         allScoreDetails = allScoreDetails.concat(scoreDetails);
 
@@ -31,7 +35,7 @@ export const syncShooter = async (req, res) => {
 
         return {
             ...result,
-            shootingResultId: resultIds[index],
+            [SHOOTING_RESULT_ID_KEY]: resultIds[index],
         };
     });
 

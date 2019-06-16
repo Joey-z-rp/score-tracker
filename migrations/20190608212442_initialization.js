@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('shooters', function(table) {
-        table.integer('id').notNull().primary();
+        table.integer('shooterId').notNull().primary();
         table.integer('numberOfResult').notNull();
         table.string('name').notNull();
         table.string('nickName');
@@ -17,7 +17,7 @@ exports.up = function(knex, Promise) {
     })
     .createTable('shootingResults', function(table) {
         table.integer('shootingResultId').notNull().primary();
-        table.integer('shooterId').references('id').inTable('shooters');
+        table.integer('shooterId').references('shooterId').inTable('shooters');
         table.decimal('berdanStringInMM');
         table.string('competitionClub');
         table.datetime('date').notNull();
