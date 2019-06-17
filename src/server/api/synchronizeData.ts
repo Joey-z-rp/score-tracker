@@ -3,6 +3,7 @@ import {
     NUMBER_OF_RESULTS_KEY,
     SHOOTER_ID_KEY,
     SHOOTING_RESULT_ID_KEY,
+    SyncStatus,
 } from '../../common/constants/database';
 import { Shooter } from '../models/shooter';
 import { ShootingResultAndDetail } from '../models/shootingResultAndDetail';
@@ -10,49 +11,60 @@ import { ShootingResult } from '../models/shootingResult'
 
 export const syncShooter = async (req, res) => {
     const shooterId = req.query.shooterId;
-    const shooter = await getShooterInfo(shooterId);
-    const shooterInDB = await Shooter.get(shooterId);
-
-    if (shooterInDB.length === 0) {
-        await Shooter.create({ ...shooter, [SHOOTER_ID_KEY]: shooterId });
+    const [shooter, shooterInDB] = await Promise.all([
+        getShooterInfo(shooterId),
+        Shooter.get(shooterId),
+    ]);
+    const isCreating = shooterInDB.length === 0;
+    if (isCreating) {
+        await Shooter.create({
+            ...shooter,
+            [SHOOTER_ID_KEY]: shooterId,
+        });
     }
 
     const numberOfResults = shooter[NUMBER_OF_RESULTS_KEY];
     const numberOfResultsInDB = await ShootingResult.getResultCount(shooterId);
-    if (numberOfResults === numberOfResultsInDB) return res.json({ status: 'up to date' });
+    if (numberOfResults === numberOfResultsInDB) return res.json({ status: SyncStatus.UpToDate });
 
-    const resultIdsInDB = numberOfResultsInDB !== 0
+    
+    const syncStatus = isCreating ? SyncStatus.Creating : SyncStatus.Synchronizing;
+    await Shooter.setSyncStatus(shooterId, syncStatus);
+    console.info(`Shooter ${shooterId} sync status: ${syncStatus}`);
+    res.json({ status: syncStatus });
+
+    try {
+        const resultIdsInDB = numberOfResultsInDB !== 0
         ? await ShootingResult.getRestultIds(shooterId)
         : [];
-    const resultIdsInHex = await getResultIds(shooterId, numberOfResults);
-    const resultIdsToFetch = resultIdsInHex.filter(id => !resultIdsInDB.includes(id));
+        const resultIdsInHex = await getResultIds(shooterId, numberOfResults);
+        const resultIdsToFetch = resultIdsInHex.filter(id => !resultIdsInDB.includes(id));
 
-    const rawResults = await getShootingResults(resultIdsToFetch);
-    let allScoreDetails: any[] = [];
-    const results = rawResults.map((result, index) => {
-        const scoreDetails = result.scoreDetails.map(scoreDetail => ({
-            ...scoreDetail,
-            [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
-        }));
-        allScoreDetails = allScoreDetails.concat(scoreDetails);
+        const rawResults = await getShootingResults(resultIdsToFetch);
+        let allScoreDetails: any[] = [];
+        const results = rawResults.map((result, index) => {
+            const scoreDetails = result.scoreDetails.map(scoreDetail => ({
+                ...scoreDetail,
+                [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
+            }));
+            allScoreDetails = allScoreDetails.concat(scoreDetails);
 
-        delete result.scoreDetails;
+            delete result.scoreDetails;
 
-        return {
-            ...result,
-            [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
-        };
-    });
+            return {
+                ...result,
+                [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
+            };
+        });
 
-    await ShootingResultAndDetail.batchCreate(results, allScoreDetails);
-
-    res.json({
-        allScoreDetails,
-        shooter,
-        shooterId,
-        results,
-        resultIdsToFetch,
-    });
+        await ShootingResultAndDetail.batchCreate(results, allScoreDetails);
+        await Shooter.setSyncStatus(shooterId, SyncStatus.Succeeded);
+        console.info(`Shooter ${shooterId} sync status: ${SyncStatus.Succeeded}`);
+    }
+    catch(error) {
+        await Shooter.setSyncStatus(shooterId, SyncStatus.Failed);
+        console.error(`Shooter ${shooterId} sync status: ${SyncStatus.Failed}`);
+    }
 };
 
 async function getShooterInfo(shooterId: number) {

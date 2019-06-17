@@ -13,6 +13,7 @@ export const GRADE_CLUB_T_RIFLE_KEY = 'gradeClubTRifle';
 export const GRADE_CLUB_F_STD_KEY = 'gradeClubFStd';
 export const GRADE_CLUB_F_OPEN_KEY = 'gradeClubFOpen';
 export const GRADE_CLUB_F_TR_KEY = 'gradeClubFTR';
+export const SYNC_STATUS_KEY = 'syncStatus';
 
 // Shooting results table
 export const SHOOTING_RESULT_ID_KEY = 'shootingResultId';
@@ -43,3 +44,12 @@ export const RESULT_DETAILS_Y_KEY = 'resultYInMM';
 export const RESULT_DETAILS_SCORE_KEY = 'score';
 export const RESULT_DETAILS_TEMPERATURE_KEY = 'temperature';
 export const RESULT_DETAILS_SHOT_TIME_KEY = 'shotTime';
+
+// Enums
+export enum SyncStatus {
+    Creating = 'creating',
+    Failed = 'failed',
+    Succeeded = 'succeeded',
+    Synchronizing = 'synchronizing',
+    UpToDate = 'upToDate',
+}
