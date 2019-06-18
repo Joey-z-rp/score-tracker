@@ -15,7 +15,7 @@ export const getResultIds = (shooterId: number, pageNumber: number): Promise<any
             const $ = cheerio.load(html);
 
             if (is404($)) {
-                throw new Error(`Error retrieving result ids for shooter ${shooterId}`);
+                throw new Error('Error retrieving result ids');
             }
 
             const resultTable = $('tbody', 'div#shooting-grid');
@@ -28,5 +28,8 @@ export const getResultIds = (shooterId: number, pageNumber: number): Promise<any
             if (hasNaN) throw new Error('Not all result ids are number');
             
             return resultIds;
+        })
+        .catch(error => {
+            throw new Error(`An error happened with shooter id ${shooterId}: ${error.message}`);
         });
 };

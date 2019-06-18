@@ -45,6 +45,10 @@ export const RESULT_DETAILS_SCORE_KEY = 'score';
 export const RESULT_DETAILS_TEMPERATURE_KEY = 'temperature';
 export const RESULT_DETAILS_SHOT_TIME_KEY = 'shotTime';
 
+// Common
+export const CREATED_AT_KEY = 'createdAt';
+export const UPDATED_AT_KEY = 'updatedAt';
+
 // Enums
 export enum SyncStatus {
     Creating = 'creating',

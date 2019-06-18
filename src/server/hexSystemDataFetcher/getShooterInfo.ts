@@ -20,7 +20,7 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
             const $ = cheerio.load(html);
 
             if (is404($)) {
-                throw new Error(`Error retrieving shooter information (id: ${shooterId})`);
+                throw new Error('Error retrieving shooter information');
             }
 
             const name = $('h1', 'header').text();
@@ -30,6 +30,9 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
                 [NAME_KEY]: name,
                 ...shooterInfo,
             };
+        })
+        .catch(error => {
+            throw new Error(`An error happened with shooter id ${shooterId}: ${error.message}`);
         });
 };
 

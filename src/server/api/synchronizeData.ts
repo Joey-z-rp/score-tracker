@@ -47,6 +47,7 @@ export const syncShooter = async (req, res) => {
     }
     catch(error) {
         await Shooter.setSyncStatus(shooterId, SyncStatus.Failed);
+        console.error(error)
         console.error(`Shooter ${shooterId} sync status: ${SyncStatus.Failed}`);
     }
 };

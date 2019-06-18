@@ -1,6 +1,7 @@
 import * as knex from 'knex';
-
 import { format } from 'date-fns';
+
+import { CREATED_AT_KEY, UPDATED_AT_KEY } from '../../common/constants/database';
 import { STANDARD_DATE_TIME_FORMAT } from '../../common/constants/date';
 
 export const pg = knex({
@@ -14,9 +15,15 @@ export const pg = knex({
     debug: false,
 });
 
-export const createTimestamp = (item: any): any => ({
+export const withCreatedAtTimestamp = (item: any): any => ({
     ...item,
-    createdAt: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
+    [CREATED_AT_KEY]: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
 });
 
-export const createTimestamps = (items: any[]): any[] => items.map(item => createTimestamp(item));
+export const withUpdatedAtTimestamp = (item: any): any => ({
+    ...item,
+    [UPDATED_AT_KEY]: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
+});
+
+export const withCreatedAtTimestamps = (items: any[]): any[] =>
+    items.map(item => withCreatedAtTimestamp(item));

@@ -1,4 +1,4 @@
-import { createTimestamps, pg } from './utils';
+import { pg, withCreatedAtTimestamps } from './utils';
 import {
     SHOOTER_ID_KEY,
     SHOOTING_RESULT_ID_KEY,
@@ -7,7 +7,7 @@ import {
 
 export class ShootingResult {
     static batchCreate(results) {
-        const resultsWithTimestamp = createTimestamps(results);
+        const resultsWithTimestamp = withCreatedAtTimestamps(results);
 
         return pg.batchInsert(SHOOTING_RESULTS_TABLE, resultsWithTimestamp)
             .returning(SHOOTING_RESULT_ID_KEY);

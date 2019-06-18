@@ -1,4 +1,8 @@
-import { createTimestamp, pg } from './utils';
+import {
+    pg,
+    withCreatedAtTimestamp,
+    withUpdatedAtTimestamp,
+} from './utils';
 import {
     SHOOTER_ID_KEY,
     SHOOTERS_TABLE,
@@ -8,7 +12,7 @@ import {
 
 export class Shooter {
     static create(shooter) {
-        const shooterWithTimestamp = createTimestamp(shooter);
+        const shooterWithTimestamp = withCreatedAtTimestamp(shooter);
         return pg(SHOOTERS_TABLE).insert(shooterWithTimestamp, [SHOOTER_ID_KEY]);
     }
 
@@ -18,6 +22,6 @@ export class Shooter {
 
     static setSyncStatus(shooterId: number, status: SyncStatus) {
         return pg(SHOOTERS_TABLE).where({ [SHOOTER_ID_KEY]: shooterId })
-            .update({ [SYNC_STATUS_KEY]: status});
+            .update(withUpdatedAtTimestamp({ [SYNC_STATUS_KEY]: status }));
     }
 }

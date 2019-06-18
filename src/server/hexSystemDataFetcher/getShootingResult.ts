@@ -46,7 +46,7 @@ export const getShootingResult = (resultId: string): Promise<any> => {
             const $ = cheerio.load(html);
 
             if (is404($)) {
-                throw new Error(`Error retrieving shooting result (id: ${resultId})`);
+                throw new Error('Error retrieving shooting result');
             }
 
             const headerInfo = getHeaderInfo($);
@@ -58,6 +58,9 @@ export const getShootingResult = (resultId: string): Promise<any> => {
                 ...shootingInfo,
                 ...shootingResultDetails,
             };
+        })
+        .catch(error => {
+            throw new Error(`An error happened with result id ${resultId}: ${error.message}`);
         });
 };
 
