@@ -36,6 +36,7 @@ export const BERDAN_STRING_IN_MM_KEY = 'berdanStringInMM';
 export const X_SIZE_IN_MM_KEY = 'xSizeInMM';
 export const Y_SIZE_IN_MM_KEY = 'ySizeInMM';
 export const DELAY_KEY = 'delay';
+export const IS_INVALID = 'isInvalid';
 
 // Shooting result details table
 export const RESULT_DETAILS_NUMBER_KEY = 'resultNumber';

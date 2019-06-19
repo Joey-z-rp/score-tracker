@@ -74,16 +74,19 @@ async function getResultsAndScoreDetails(
     const rawResults = await getRawResults(resultIdsToFetch);
     let allScoreDetails: any[] = [];
     const results = rawResults.map((result, index) => {
-        const scoreDetails = result.scoreDetails.map(scoreDetail => ({
-            ...scoreDetail,
-            [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
-        }));
+        const scoreDetails = result.scoreDetails 
+            ? result.scoreDetails.map(scoreDetail => ({
+                ...scoreDetail,
+                [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
+            }))
+            : [];
         allScoreDetails = allScoreDetails.concat(scoreDetails);
 
         delete result.scoreDetails;
 
         return {
             ...result,
+            [SHOOTER_ID_KEY]: shooterId,
             [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
         };
     });

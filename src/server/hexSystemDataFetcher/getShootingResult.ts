@@ -12,6 +12,7 @@ import {
     GRADE_KEY,
     GROUP_SIZE_IN_MM_KEY,
     GROUP_SIZE_RAW_DATA_KEY,
+    IS_INVALID,
     NAME_KEY,
     RESULT_DETAILS_TEMPERATURE_KEY,
     RESULT_DETAILS_X_KEY,
@@ -60,7 +61,8 @@ export const getShootingResult = (resultId: string): Promise<any> => {
             };
         })
         .catch(error => {
-            throw new Error(`An error happened with result id ${resultId}: ${error.message}`);
+            console.warn(`An error happened with result id ${resultId}: ${error.message}`);
+            return { [IS_INVALID]: true };
         });
 };
 

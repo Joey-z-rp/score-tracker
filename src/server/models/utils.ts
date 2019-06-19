@@ -29,6 +29,7 @@ export const withCreatedAtTimestamps = (items: any[]): any[] =>
     items.map(item => withCreatedAtTimestamp(item));
 
 export const attachInfoAndThrow = (functionName: string, args) => (error: Error) => {
-    const message = `Function ${functionName} errored with args: ${args}. Message: ${error.message}`;
+    const message = `Function ${functionName} errored with args: 
+        ${JSON.stringify(args, null, 4)}.Message: ${error.message}`;
     throw new Error(message);
 }
