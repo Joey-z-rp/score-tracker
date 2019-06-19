@@ -14,6 +14,7 @@ export const GRADE_CLUB_F_STD_KEY = 'gradeClubFStd';
 export const GRADE_CLUB_F_OPEN_KEY = 'gradeClubFOpen';
 export const GRADE_CLUB_F_TR_KEY = 'gradeClubFTR';
 export const SYNC_STATUS_KEY = 'syncStatus';
+export const SYNCHRONIZED_AT_KEY = 'synchronizedAt';
 
 // Shooting results table
 export const SHOOTING_RESULT_ID_KEY = 'shootingResultId';

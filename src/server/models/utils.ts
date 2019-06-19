@@ -15,14 +15,16 @@ export const pg = knex({
     debug: false,
 });
 
+export const getCurrentTime = () => format(Date.now(), STANDARD_DATE_TIME_FORMAT);
+
 export const withCreatedAtTimestamp = (item: any): any => ({
     ...item,
-    [CREATED_AT_KEY]: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
+    [CREATED_AT_KEY]: getCurrentTime(),
 });
 
 export const withUpdatedAtTimestamp = (item: any): any => ({
     ...item,
-    [UPDATED_AT_KEY]: format(Date.now(), STANDARD_DATE_TIME_FORMAT),
+    [UPDATED_AT_KEY]: getCurrentTime(),
 });
 
 export const withCreatedAtTimestamps = (items: any[]): any[] =>
