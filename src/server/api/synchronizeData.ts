@@ -103,7 +103,9 @@ async function getResultIds(shooterId: number, numberOfResults: number) {
         await sleep(1000); // To prevent making too many requests in a short period
     }
 
-    if (resultIds.length !== numberOfResults) throw new Error('Number of results does not match');
+    if (resultIds.length !== numberOfResults) {
+        throw new Error(`Shooter ${shooterId}: Number of results does not match resultIds length`);
+    }
 
     return resultIds;
 }
