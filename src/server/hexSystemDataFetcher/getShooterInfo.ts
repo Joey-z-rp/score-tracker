@@ -7,11 +7,29 @@ import {
 } from './constants';
 import { is404 } from './utils';
 import {
+    CLUB_KEY,
+    DEFAULT_DISCIPLINE_KEY,
+    GRADE_CLUB_F_OPEN_KEY,
+    GRADE_CLUB_F_STD_KEY,
+    GRADE_CLUB_F_TR_KEY,
+    GRADE_CLUB_T_RIFLE_KEY,
     NAME_KEY,
+    NICK_NAME_KEY,
     NUMBER_OF_RESULTS_KEY,
 } from '../../common/constants/database';
 
-export const getShooterInfo = (shooterId: number): Promise<any> => {
+interface ShooterInfo {
+    [NICK_NAME_KEY]: string;
+    [CLUB_KEY]: string;
+    [DEFAULT_DISCIPLINE_KEY]: string;
+    [NUMBER_OF_RESULTS_KEY]: number;
+    [GRADE_CLUB_T_RIFLE_KEY]: string;
+    [GRADE_CLUB_F_STD_KEY]: string;
+    [GRADE_CLUB_F_OPEN_KEY]: string;
+    [GRADE_CLUB_F_TR_KEY]: string;
+}
+
+export const getShooterInfo = (shooterId: number): Promise<{ [NAME_KEY]:string } & ShooterInfo> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooter/${shooterId}`;
 
     return fetch(url)
@@ -36,7 +54,7 @@ export const getShooterInfo = (shooterId: number): Promise<any> => {
         });
 };
 
-function getDataFromShooterInfoTable($: CheerioStatic) {
+function getDataFromShooterInfoTable($: CheerioStatic):ShooterInfo {
     const shooterInfoTableRows = $('table#w0').find('tr');
     const shooterInfo = {};
 
@@ -56,5 +74,5 @@ function getDataFromShooterInfoTable($: CheerioStatic) {
     );
     shooterInfo[NUMBER_OF_RESULTS_KEY] = numberOfResults;
 
-    return shooterInfo;
+    return shooterInfo as ShooterInfo;
 }

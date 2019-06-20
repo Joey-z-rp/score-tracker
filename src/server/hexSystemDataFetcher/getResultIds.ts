@@ -6,7 +6,7 @@ import {
 } from './constants';
 import { is404 } from './utils';
 
-export const getResultIds = (shooterId: number, pageNumber: number): Promise<any> => {
+export const getResultIds = (shooterId: number, pageNumber: number): Promise<number[]> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooting?shooterId=${shooterId}&page=${pageNumber}`;
 
     return fetch(url)
