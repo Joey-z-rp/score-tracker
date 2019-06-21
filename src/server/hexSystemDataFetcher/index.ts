@@ -4,8 +4,8 @@ import { getShootingResult } from './getShootingResult';
 
 const hexSystemDataFetcher = {
     getResultIds: (shooterId: number, pageNumber: number) => getResultIds(shooterId, pageNumber),
-    getShooterInfo: (shooterId: number): Promise<any> => getShooterInfo(shooterId),
-    getShootingResult: (resultId: string): Promise<any> => getShootingResult(resultId),
+    getShooterInfo: (shooterId: number) => getShooterInfo(shooterId),
+    getShootingResult: (resultId: number) => getShootingResult(resultId),
 };
 
 export default hexSystemDataFetcher;

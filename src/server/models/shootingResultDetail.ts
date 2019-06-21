@@ -10,7 +10,7 @@ import {
 } from '../../common/constants/database';
 
 export class ShootingResultDetail {
-    static batchCreate(resultDetails) {
+    static batchCreate(resultDetails: object[]): Promise<any> {
         const resultDetailsWithTimestamp = withCreatedAtTimestamps(resultDetails);
 
         return pg.batchInsert(SHOOTING_RESULT_DETAILS_TABLE, resultDetailsWithTimestamp)

@@ -10,7 +10,7 @@ import {
 } from '../../common/constants/database';
 
 export class ShootingResult {
-    static batchCreate(results) {
+    static batchCreate(results: object[]): Promise<number[]> {
         const resultsWithTimestamp = withCreatedAtTimestamps(results);
 
         return pg.batchInsert(SHOOTING_RESULTS_TABLE, resultsWithTimestamp)
@@ -18,7 +18,7 @@ export class ShootingResult {
             .catch(attachInfoAndThrow('ShootingResult.batchCreate', arguments));
     }
 
-    static getResultCount(shooterId: number) {
+    static getResultCount(shooterId: number): Promise<number> {
         return pg(SHOOTING_RESULTS_TABLE)
             .count(SHOOTING_RESULT_ID_KEY)
             .where({ [SHOOTER_ID_KEY]: shooterId })
@@ -26,7 +26,7 @@ export class ShootingResult {
             .catch(attachInfoAndThrow('ShootingResult.getResultCount', arguments));
     }
 
-    static getRestultIds(shooterId: number) {
+    static getRestultIds(shooterId: number): Promise<number[]> {
         return pg(SHOOTING_RESULTS_TABLE)
             .where({ [SHOOTER_ID_KEY]: shooterId })
             .select(SHOOTING_RESULT_ID_KEY)

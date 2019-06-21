@@ -95,7 +95,7 @@ async function getResultsAndScoreDetails(
 }
 
 async function getResultIds(shooterId: number, numberOfResults: number) {
-    let resultIds = [];
+    let resultIds: number[] = [];
     let page = 1;
 
     while (resultIds.length < numberOfResults) {
@@ -113,7 +113,7 @@ async function getResultIds(shooterId: number, numberOfResults: number) {
     return resultIds;
 }
 
-async function getRawResults(resultIds: string[]) {
+async function getRawResults(resultIds: number[]) {
     let index = 0;
     const results: any[] = [];
 

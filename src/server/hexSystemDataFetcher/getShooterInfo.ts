@@ -7,29 +7,22 @@ import {
 } from './constants';
 import { is404 } from './utils';
 import {
-    CLUB_KEY,
-    DEFAULT_DISCIPLINE_KEY,
-    GRADE_CLUB_F_OPEN_KEY,
-    GRADE_CLUB_F_STD_KEY,
-    GRADE_CLUB_F_TR_KEY,
-    GRADE_CLUB_T_RIFLE_KEY,
     NAME_KEY,
-    NICK_NAME_KEY,
     NUMBER_OF_RESULTS_KEY,
 } from '../../common/constants/database';
 
-interface ShooterInfo {
-    [NICK_NAME_KEY]: string;
-    [CLUB_KEY]: string;
-    [DEFAULT_DISCIPLINE_KEY]: string;
-    [NUMBER_OF_RESULTS_KEY]: number;
-    [GRADE_CLUB_T_RIFLE_KEY]: string;
-    [GRADE_CLUB_F_STD_KEY]: string;
-    [GRADE_CLUB_F_OPEN_KEY]: string;
-    [GRADE_CLUB_F_TR_KEY]: string;
+export interface ShooterInfo {
+    club: string;
+    defaultDiscipline: string;
+    gradeClubFOpen: string;
+    gradeClubFStd: string;
+    gradeClubFTR: string;
+    gradeClubTRifle: string;
+    nickName: string;
+    numberOfResult: number;
 }
 
-export const getShooterInfo = (shooterId: number): Promise<{ [NAME_KEY]:string } & ShooterInfo> => {
+export const getShooterInfo = (shooterId: number): Promise<{ name: string } & ShooterInfo> => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooter/${shooterId}`;
 
     return fetch(url)

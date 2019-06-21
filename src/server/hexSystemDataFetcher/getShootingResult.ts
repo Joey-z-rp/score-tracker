@@ -38,7 +38,45 @@ import {
 } from './constants';
 import { is404 } from './utils';
 
-export const getShootingResult = (resultId: string): Promise<any> => {
+interface IShootingResult {
+    berdanStringInMM: number;
+    competitionClub: string;
+    date: string;
+    delay: string;
+    discipline: string;
+    distance: string;
+    edgeShotOne: number;
+    edgeShotTwo: number;
+    grade: string;
+    groupSizeInMM: number;
+    name: string;
+    nickNameWithClub: number;
+    scoreDetails: IScoreDetails;
+    scoreNumber: string;
+    scoreString: string;
+    shooterId: number;
+    shotsCount: number;
+    sightersCount: number;
+    stage: number;
+    targetNumber: number;
+    xSizeInMM: number;
+    ySizeInMM: number;
+}
+
+interface IInvalidShootingResult {
+    isInvalid: boolean
+}
+
+interface IScoreDetails {
+    resultNumber: string;
+    resultXInMM: number;
+    resultYInMM: number;
+    score: string;
+    shotTime: string;
+    temperature: number;
+}
+
+export const getShootingResult = (resultId: number) => {
     const url = `${HEX_SYSTEM_BASE_URL}/shooting/${resultId}`;
 
     return fetch(url)
@@ -63,7 +101,7 @@ export const getShootingResult = (resultId: string): Promise<any> => {
         .catch(error => {
             console.warn(`An error happened with result id ${resultId}: ${error.message}`);
             return { [IS_INVALID]: true };
-        });
+        }) as Promise<IShootingResult | IInvalidShootingResult>;
 };
 
 function getHeaderInfo($: CheerioStatic) {

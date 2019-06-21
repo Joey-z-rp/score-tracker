@@ -9,7 +9,7 @@ import {
 } from '../../common/constants/database';
 
 export class ShootingResultAndDetail {
-    static batchCreate(results, resultDetails) {
+    static batchCreate(results: object[], resultDetails: object[]): Promise<any> {
         const resultsWithTimestamp = withCreatedAtTimestamps(results);
         const resultDetailsWithTimestamp = withCreatedAtTimestamps(resultDetails);
 

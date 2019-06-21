@@ -17,17 +17,17 @@ export const pg = knex({
 
 export const getCurrentTime = () => format(Date.now(), STANDARD_DATE_TIME_FORMAT);
 
-export const withCreatedAtTimestamp = (item: any): any => ({
+export const withCreatedAtTimestamp = (item: object): object => ({
     ...item,
     [CREATED_AT_KEY]: getCurrentTime(),
 });
 
-export const withUpdatedAtTimestamp = (item: any): any => ({
+export const withUpdatedAtTimestamp = (item: object): object => ({
     ...item,
     [UPDATED_AT_KEY]: getCurrentTime(),
 });
 
-export const withCreatedAtTimestamps = (items: any[]): any[] =>
+export const withCreatedAtTimestamps = (items: object[]): object[] =>
     items.map(item => withCreatedAtTimestamp(item));
 
 export const attachInfoAndThrow = (functionName: string, args) => (error: Error) => {
