@@ -2,6 +2,7 @@ import * as compression from 'compression';
 import * as express from 'express';
 import expressPromiseRouter from 'express-promise-router';
 import * as path from 'path';
+import { getAllShooters } from './api/shooter';
 import { syncShooter } from './api/synchronizeData';
 
 const app = express();
@@ -20,6 +21,7 @@ router.use(compression());
 
 // API
 router.get('/api/syncShooterData', syncShooter);
+router.get('/api/shooters', getAllShooters);
 
 router.use('/public', express.static(path.join(__dirname, 'public')));
 router.use('*', express.static(path.join(__dirname, 'public')));

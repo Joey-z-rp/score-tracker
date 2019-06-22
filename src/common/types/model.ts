@@ -2,7 +2,7 @@ import { SyncStatus } from '../constants/database';
 
 export interface IShooter {
     club: string;
-    createdAt: Date;
+    createdAt: string | Date;
     defaultDiscipline: string;
     gradeClubFOpen: string;
     gradeClubFStd: string;
@@ -12,7 +12,7 @@ export interface IShooter {
     nickName: string;
     numberOfResult: number;
     shooterId: number;
-    synchronizedAt: Date;
+    synchronizedAt: string | Date;
     syncStatus: SyncStatus;
-    updatedAt: Date;
+    updatedAt: string | Date;
 }

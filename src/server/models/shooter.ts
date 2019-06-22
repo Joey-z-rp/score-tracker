@@ -26,6 +26,11 @@ export class Shooter {
             .catch(attachInfoAndThrow('Shooter.get', arguments));
     }
 
+    static getAll(): Promise<IShooter[]> {
+        return pg(SHOOTERS_TABLE).select()
+            .catch(attachInfoAndThrow('Shooter.get', arguments));
+    }
+
     static setSyncStatus(shooterId: number, status: SyncStatus): Promise<any> {
         const columnsToUpdate = status === SyncStatus.Succeeded
             ? {

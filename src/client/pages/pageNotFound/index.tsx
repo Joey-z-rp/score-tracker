@@ -1,12 +1,14 @@
 import * as React from 'react';
+import Paper from '@material-ui/core/Paper';
 import { memo } from 'react';
-import { Message } from 'semantic-ui-react';
 
 const PageNotFound: React.FunctionComponent = () => (
-    <Message size="huge">
-        <Message.Header>Sorry, the page you are looking for does not exist</Message.Header>
-        <p>Please check the address and try again.</p>
-    </Message>
+    <div>
+        <Paper>
+            <h1>Page not found</h1>
+            <p>Please check the address and try again.</p>
+        </Paper>
+    </div>
 );
 
 export default memo(PageNotFound);
