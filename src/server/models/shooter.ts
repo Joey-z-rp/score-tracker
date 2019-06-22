@@ -5,6 +5,7 @@ import {
     withCreatedAtTimestamp,
     withUpdatedAtTimestamp,
 } from './utils';
+import { IShooter } from '../../common/types/model';
 import {
     SHOOTER_ID_KEY,
     SHOOTERS_TABLE,
@@ -12,23 +13,6 @@ import {
     SYNCHRONIZED_AT_KEY,
     SyncStatus,
 } from '../../common/constants/database';
-
-interface IShooter {
-    club: string;
-    createdAt: Date;
-    defaultDiscipline: string;
-    gradeClubFOpen: string;
-    gradeClubFStd: string;
-    gradeClubFTR: string;
-    gradeClubTRifle: string;
-    name: string;
-    nickName: string;
-    numberOfResult: number;
-    shooterId: number;
-    synchronizedAt: Date;
-    syncStatus: SyncStatus;
-    updatedAt: Date;
-}
 
 export class Shooter {
     static create(shooter: object): Promise<number[]> {

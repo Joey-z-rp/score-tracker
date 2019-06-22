@@ -1,25 +1,14 @@
-import fetch from '../../common/utils/fetch';
-
-// action types
+import { CALL_API } from '../redux/apiMiddleware';
 
 export const SYNC_SHOOTER = 'SYNC_SHOOTER';
+export const SYNC_SHOOTER_SUCCESS = 'SYNC_SHOOTER_SUCCESS';
+export const SYNC_SHOOTER_FAILURE = 'SYNC_SHOOTER_FAILURE';
 
-// action creators
-
-export function syncShooterAction() {
-    return {
-        type: SYNC_SHOOTER,
-    };
-}
-
-// async actions
-
-export function syncShooterData(shooterId: number) {
-    return (dispatch, getState) => {
-        const url = `/api/syncShooterData?shooterId=${shooterId}`;
-
-        return fetch(url)
-            .then((response: any) => console.log(response))
-            .catch(err => console.log({err}));
-    };
-}
+export const syncShooter = (shooterId: number) => ({
+    [CALL_API]: {
+        types: [SYNC_SHOOTER, SYNC_SHOOTER_SUCCESS, SYNC_SHOOTER_FAILURE],
+        endpoint: `/api/syncShooterData?shooterId=${shooterId}`,
+        onSuccess: (response) => { console.log({ SYNC_SHOOTER_SUCCESS: response }) },
+        onFailure: (error) => { console.log({ SYNC_SHOOTER_FAILURE: error }) },
+    },
+});

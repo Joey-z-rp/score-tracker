@@ -2,33 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { syncShooterData } from "../../actions/synchronizeData"; 
-
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
-    syncShooter: (shooterId: number) => dispatch(syncShooterData(shooterId)),
 });
 
 class HomePage extends React.Component<any> {
-    state = {
-        input: "",
-    };
-
-    sync = () => {
-        this.props.syncShooter(this.state.input);
-    };
-
     render() {
         return (
             <div>
-                <div>Sync shooter:</div>
-                <input
-                    type="text"
-                    value={this.state.input}
-                    onChange={event => this.setState({ input: event.target.value })}
-                />
-                <button onClick={this.sync}>Sync</button>
+                shooter list here
             </div>
         );
     }
