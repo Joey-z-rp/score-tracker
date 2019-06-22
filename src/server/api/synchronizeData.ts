@@ -128,7 +128,7 @@ async function getRawResults(resultIds: number[]) {
     return results;
 }
 
-function sleep(time: number): Promise<void> {
+export function sleep(time: number): Promise<void> {
     return new Promise(resolve => {
         setTimeout(() => { resolve() }, time);
     });
