@@ -8,6 +8,7 @@ import { StylesProvider } from '@material-ui/styles';
 
 import Homepage from './pages/homePage';
 import PageNotFound from './pages/pageNotFound';
+import ShooterStatistics from './pages/shooterStatistics';
 import Synchronize from './pages/synchronize';
 
 const App = () => (
@@ -15,6 +16,7 @@ const App = () => (
         <Switch>
             <Route component={Homepage} exact path="/" />
             <Route component={Synchronize} exact path="/sync" />
+            <Route component={ShooterStatistics} exact path="/shooter/:shooterId" />
             <Route component={PageNotFound} />
         </Switch>
     </StylesProvider>

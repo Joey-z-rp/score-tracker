@@ -3,6 +3,7 @@ import * as express from 'express';
 import expressPromiseRouter from 'express-promise-router';
 import * as path from 'path';
 import { getAllShooters } from './api/shooter';
+import { getGroupSizes } from './api/shooterStatistics';
 import { syncShooter } from './api/synchronizeData';
 
 const app = express();
@@ -22,6 +23,7 @@ router.use(compression());
 // API
 router.get('/api/syncShooterData', syncShooter);
 router.get('/api/shooters', getAllShooters);
+router.get('/api/shooter/:shooterId/groupSizes', getGroupSizes);
 
 router.use('/public', express.static(path.join(__dirname, 'public')));
 router.use('*', express.static(path.join(__dirname, 'public')));

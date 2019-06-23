@@ -16,3 +16,8 @@ export interface IShooter {
     syncStatus: SyncStatus;
     updatedAt: string | Date;
 }
+
+export interface IGroupSize {
+    date: string | Date;
+    groupSizeInMM: number;
+}
