@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import GroupSizes from './components/groupSizes';
 import { capitalizeEachWord } from '../../../common/utils/string';
 import { convertToDisplayFormat } from '../../../common/utils/date';
 import { getGroupSizes as getGroupSizesAction } from '../../actions/shooterStatistics';
@@ -24,21 +25,32 @@ class HomePage extends React.Component<any> {
 
     render() {
         const {
+            groupSizes,
             isFetchingGroupSizes,
         } = this.props;
         
         if (isFetchingGroupSizes) return <CircularProgress />;
 
+        const convertedGroupSizes = groupSizes.map(groupSize =>({
+            date: new Date(groupSize.date),
+            groupSizeInMM: Number(groupSize.groupSizeInMM),
+        })).sort((a, b) => a.date - b.date).map((groupSize, index) => ({
+            ...groupSize,
+            index: index + 1,
+        }));
+
         return (
             <Container maxWidth="lg">
                 <Typography variant="h4">Shooter Statistics</Typography>
                 <Divider />
+                <GroupSizes groupSizesData={convertedGroupSizes}/>
             </Container>
         );
     }
 }
 
 const mapStateToProps = (state: IState) => ({
+    groupSizes: state.shooterStatistics.groupSizes,
     isFetchingGroupSizes: state.shooterStatistics.isFetchingGroupSizes,
 });
 
