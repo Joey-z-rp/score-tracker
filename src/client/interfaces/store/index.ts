@@ -1,4 +1,7 @@
-import { IShooter } from '../../../common/types/model';
+import {
+    IShooter,
+    IGroupSize,
+} from '../../../common/types/model';
 
 export interface IState {
     shooter: IShooterState;
@@ -20,13 +23,8 @@ export interface IConvertedShooter extends IShooter {
 
 export interface IShooterStatistics {
     error: Error | null,
-    groupSizes: IConvertedGroupSize[],
+    groupSizes: IGroupSize[],
     isFetchingGroupSizes: boolean,
-}
-
-export interface IConvertedGroupSize {
-    date: Date;
-    groupSizeInMM: number;
 }
 
 export interface ISynchronizeDataState {

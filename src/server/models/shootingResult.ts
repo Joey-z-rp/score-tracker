@@ -6,6 +6,7 @@ import {
 import { IGroupSize } from '../../common/types/model';
 import {
     DATE_KEY,
+    DISTANCE_KEY,
     GROUP_SIZE_IN_MM_KEY,
     SHOOTER_ID_KEY,
     SHOOTING_RESULT_ID_KEY,
@@ -40,7 +41,7 @@ export class ShootingResult {
     static getGroupSizes(shooterId: number): Promise<IGroupSize[]> {
         return pg(SHOOTING_RESULTS_TABLE)
             .where({ [SHOOTER_ID_KEY]: shooterId })
-            .select([DATE_KEY, GROUP_SIZE_IN_MM_KEY])
+            .select([DATE_KEY, DISTANCE_KEY, GROUP_SIZE_IN_MM_KEY])
             .catch(attachInfoAndThrow('ShootingResult.getGroupSizes', arguments));
     }
 }

@@ -20,4 +20,5 @@ export interface IShooter {
 export interface IGroupSize {
     date: string | Date;
     groupSizeInMM: number;
+    distance: string;
 }

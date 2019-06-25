@@ -32,12 +32,14 @@ class HomePage extends React.Component<any> {
         if (isFetchingGroupSizes) return <CircularProgress />;
 
         const convertedGroupSizes = groupSizes.map(groupSize =>({
-            date: new Date(groupSize.date),
-            groupSizeInMM: Number(groupSize.groupSizeInMM),
-        })).sort((a, b) => a.date - b.date).map((groupSize, index) => ({
             ...groupSize,
-            index: index + 1,
-        }));
+            groupSizeInMM: Number(groupSize.groupSizeInMM),
+        })).filter(groupSize => groupSize.groupSizeInMM !== 0)
+            .sort((a, b) => a.date - b.date).reduce((acc, groupSize) => {
+                if (!acc[groupSize.distance]) acc[groupSize.distance] = [];
+                acc[groupSize.distance].push({ ...groupSize, index: acc[groupSize.distance].length + 1});
+                return acc;
+            }, {});
 
         return (
             <Container maxWidth="lg">

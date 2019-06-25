@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as d3 from 'd3';
-import { IConvertedGroupSize } from '../../../interfaces/store';
 
 const GroupSizesChart = styled.div`
     svg {
@@ -12,7 +11,10 @@ const GroupSizesChart = styled.div`
 
 class GroupSizes extends React.Component<any> {
     componentDidMount() {
-        draw(this.props.groupSizesData);
+        if (Object.keys(this.props.groupSizesData).length !== 0) {
+            console.log({groupSizesData: this.props.groupSizesData})
+            draw(this.props.groupSizesData['800y']);
+        }
     }
 
     render() {
@@ -29,7 +31,6 @@ class GroupSizes extends React.Component<any> {
 export default GroupSizes;
 
 function draw(groupSizesData) {
-    console.log(groupSizesData)
     const margin = 50;
     const width = 1000;
     const height = 500;
