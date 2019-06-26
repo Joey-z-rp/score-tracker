@@ -54,6 +54,7 @@ class HomePage extends React.Component<any> {
 
     render() {
         const {
+            history,
             isFetchingShooters,
             shooters,
         } = this.props;
@@ -107,7 +108,7 @@ class HomePage extends React.Component<any> {
 
             return (
                 <Card key={shooter.shooterId}>
-                    <CardActionArea>
+                    <CardActionArea onClick={() => history.push(`/shooter/${shooter.shooterId}`)}>
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="avatar">

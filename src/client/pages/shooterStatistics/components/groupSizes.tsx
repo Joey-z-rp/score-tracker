@@ -41,11 +41,17 @@ function draw(groupSizesData) {
         .attr('transform', `translate(${margin}, ${margin})`);
     const getX = d3.scaleLinear().domain(d3.extent(groupSizesData, groupSize => groupSize.index))
         .range([0, width]);
-    const getY = d3.scaleLinear().domain(d3.extent(groupSizesData, groupSize => groupSize.groupSizeInMM))
-        .range([height, 0]);
-    const line = d3.line().x(data => getX(data.index)).y(data => getY(data.groupSizeInMM));
+    const getY = d3.scalePow().domain(d3.extent(groupSizesData, groupSize => groupSize.groupSizeInMM))
+        .range([height, 0]).exponent(1);
+    const line = d3.line().x(data => getX(data.index)).y(data => getY(data.groupSizeInMM)).curve(d3.curveMonotoneX);
 
     dataGroup.append('path').data([groupSizesData]).attr('fill', 'none').attr('stroke', 'red').attr('d', line);
+    
+    groupSizesData.forEach(groupSize => {
+        dataGroup.append('circle').attr('fill', 'red').attr('r', 7)
+            .attr('cx', getX(groupSize.index))
+            .attr('cy', getY(groupSize.groupSizeInMM));
+    });
 
     const xAxisGroup = dataGroup.append('g')
         .attr('transform', `translate(0, ${height})`);
