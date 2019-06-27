@@ -35,13 +35,15 @@ function draw(groupSizesData) {
     const width = 1000;
     const height = 500;
     const dataGroup = d3.select('#groupSizes').append('svg')
-        .attr('width', width + margin)
+        .attr('width', width + 2* margin)
         .attr('height', height + 2 * margin)
         .append('g')
         .attr('transform', `translate(${margin}, ${margin})`);
     const getX = d3.scaleLinear().domain(d3.extent(groupSizesData, groupSize => groupSize.index))
         .range([0, width]);
-    const getY = d3.scalePow().domain(d3.extent(groupSizesData, groupSize => groupSize.groupSizeInMM))
+    const groupSizeInMMArray = groupSizesData.map(data => data.groupSizeInMM);
+    const maxGroupSize = Math.max(...groupSizeInMMArray);
+    const getY = d3.scalePow().domain([0, maxGroupSize + 100])
         .range([height, 0]).exponent(1);
     const line = d3.line().x(data => getX(data.index)).y(data => getY(data.groupSizeInMM)).curve(d3.curveMonotoneX);
 
