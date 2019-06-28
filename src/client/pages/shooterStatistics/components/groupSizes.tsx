@@ -31,6 +31,7 @@ class GroupSizes extends React.Component<any> {
 export default GroupSizes;
 
 function draw(groupSizesData) {
+    console.log({groupSizesData})
     const margin = 50;
     const width = 1000;
     const height = 500;
@@ -57,7 +58,12 @@ function draw(groupSizesData) {
 
     const xAxisGroup = dataGroup.append('g')
         .attr('transform', `translate(0, ${height})`);
-    const xAxis = d3.axisBottom(getX);
+    
+    const MAX_X_AXIS_TICKS = 10;
+    const numberOfData = groupSizesData.length;
+    const tickNumber = numberOfData > MAX_X_AXIS_TICKS ? MAX_X_AXIS_TICKS : numberOfData;
+    const xAxis = d3.axisBottom(getX).ticks(tickNumber)
+        .tickFormat(index => d3.timeFormat("%Y-%m-%d")(groupSizesData[index - 1].date));
 
     xAxis(xAxisGroup);
 
