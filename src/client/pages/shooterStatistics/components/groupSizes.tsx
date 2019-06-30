@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components';
 
@@ -11,52 +12,45 @@ const GroupSizesChart = styled.div`
     }
 `;
 
-class GroupSizes extends React.Component<any> {
-    state = {
-        distance: '',
-        distanceOptions: [],
-    };
+const GroupSizes = ({ groupSizesData, isFetching }) => {
+    const [distance, setDistance] = useState('');
+    const [distanceOptions, setDistanceOptions] = useState([] as string[]);
 
-    componentDidMount() {
-        if (Object.keys(this.props.groupSizesData).length !== 0
-            && this.state.distanceOptions.length === 0) {
-            const distanceOptions = Object.keys(this.props.groupSizesData).sort((a, b) => {
+    useEffect(() => {
+        if (groupSizesData.length !== 0 && distanceOptions.length === 0) {
+            const sortedDistanceOptions = Object.keys(groupSizesData).sort((a, b) => {
                 const regex = /^(\d+)\D?$/;
                 const distanceA = (a.match(regex) || [])[1];
                 const distanceB = (b.match(regex) || [])[1];
                 return Number(distanceA) - Number(distanceB);
             });
-            this.setState({ distanceOptions, distance: distanceOptions[0] });
+            setDistanceOptions(sortedDistanceOptions);
+            setDistance(sortedDistanceOptions[0]);
         }
+    }, [distanceOptions]);
+
+    useEffect(() => {
+        if (distance) draw(groupSizesData[distance]);
+    }, [distance]);
+
+    const handleSelect = event => {
+        setDistance(event.target.value);
     }
 
-    componentDidUpdate() {
-        draw(this.props.groupSizesData[this.state.distance]);
-    }
+    if (isFetching) return <CircularProgress />;
 
-    handleSelect = event => {
-        this.setState({distance: event.target.value});
-    };
-
-    render() {
-        const { isFetching } = this.props;
-        const { distanceOptions } = this.state;
-
-        if (isFetching) return <CircularProgress />;
-
-        return (
-            <React.Fragment>
-                <Select
-                    value={this.state.distance}
-                    onChange={this.handleSelect}
-                >
-                    {distanceOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
-              </Select>
-                <GroupSizesChart id="groupSizes" />
-            </React.Fragment>
-        );
-    }
-}
+    return (
+        <React.Fragment>
+            <Select
+                value={distance}
+                onChange={handleSelect}
+            >
+                {distanceOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+          </Select>
+            <GroupSizesChart id="groupSizes" />
+        </React.Fragment>
+    );
+};
 
 export default GroupSizes;
 
