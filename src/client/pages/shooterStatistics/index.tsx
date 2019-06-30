@@ -44,6 +44,7 @@ class HomePage extends React.Component<any> {
         return (
             <Container maxWidth="lg">
                 <Typography variant="h4">Shooter Statistics</Typography>
+                <Typography variant="h5">Shooter Name placeholder</Typography>
                 <Divider />
                 <GroupSizes groupSizesData={convertedGroupSizes}/>
             </Container>
