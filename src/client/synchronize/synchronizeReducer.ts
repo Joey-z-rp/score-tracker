@@ -1,7 +1,7 @@
+import { IAction } from '../redux/types';
 import {
     SYNC_SHOOTER,
-} from '../actions/synchronizeData';
-import { IAction } from '../interfaces/actions';
+} from './synchronizeDataActions';
 
 const initialState = {
 

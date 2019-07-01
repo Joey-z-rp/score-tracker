@@ -1,11 +1,10 @@
-import { convertDateString } from './utils';
+import { convertDateString } from '../redux/utils';
 import {
     GET_GROUP_SIZES,
     GET_GROUP_SIZES_FAILURE,
     GET_GROUP_SIZES_SUCCESS,
-} from '../actions/shooterStatistics';
-import { IAction } from '../interfaces/actions';
-import { IShooterStatistics } from '../interfaces/store';
+} from './shooterStatisticsActions';
+import { IAction, IShooterStatistics } from '../redux/types';
 
 const initialState = {
     error: null,

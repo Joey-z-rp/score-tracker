@@ -16,11 +16,11 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { capitalizeEachWord } from '../../../common/utils/string';
-import { convertToDisplayFormat } from '../../../common/utils/date';
-import { getAllShooters as getAllShootersAction } from '../../actions/shooter';
-import { IState, IConvertedShooter } from '../../interfaces/store';
-import { SyncStatus } from '../../../common/constants/database';
+import { capitalizeEachWord } from '../../common/utils/string';
+import { convertToDisplayFormat } from '../../common/utils/date';
+import { getAllShooters as getAllShootersAction } from './shooterListActions';
+import { IState, IConvertedShooter } from '../redux/types';
+import { SyncStatus } from '../../common/constants/database';
 
 const Divider = styled(DividerComponent)`
     margin: 1rem 0;
@@ -145,8 +145,8 @@ class HomePage extends React.Component<any> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    isFetchingShooters: state.shooter.isFetching,
-    shooters: state.shooter.shooters,
+    isFetchingShooters: state.shooterList.isFetching,
+    shooters: state.shooterList.shooters,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

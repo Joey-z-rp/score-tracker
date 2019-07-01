@@ -1,15 +1,20 @@
 import {
     IShooter,
     IGroupSize,
-} from '../../../common/types/model';
+} from '../../common/types/model';
 
-export interface IState {
-    shooter: IShooterState;
-    shooterStatistics: IShooterStatistics;
-    synchronizeData: ISynchronizeDataState;
+export interface IAction {
+    type: string;
+    payload: any;
 }
 
-export interface IShooterState {
+export interface IState {
+    shooterList: IShooterListState;
+    shooterStatistics: IShooterStatistics;
+    synchronize: ISynchronizeState;
+}
+
+export interface IShooterListState {
     error: Error | null,
     isFetching: boolean,
     shooters: IConvertedShooter[],
@@ -27,6 +32,6 @@ export interface IShooterStatistics {
     isFetchingGroupSizes: boolean,
 }
 
-export interface ISynchronizeDataState {
+export interface ISynchronizeState {
 
 }

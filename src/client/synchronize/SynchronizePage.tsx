@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { syncShooter } from "../../actions/synchronizeData"; 
+import { syncShooter } from "./synchronizeDataActions"; 
 
 const mapStateToProps = () => ({});
 

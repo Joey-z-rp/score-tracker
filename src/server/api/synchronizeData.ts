@@ -1,4 +1,4 @@
-import hexSystemdataFetcher from '../hexSystemDataFetcher';
+import hexSystemdataFetcher from '../hexSystem/dataFetcher';
 import {
     NUMBER_OF_RESULTS_KEY,
     SHOOTER_ID_KEY,

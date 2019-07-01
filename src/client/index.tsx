@@ -10,7 +10,7 @@ import {
 import thunk from 'redux-thunk';
 
 import App from './App';
-import reducers from './reducers';
+import reducers from './redux/reducers';
 import apiMiddleware from './redux/apiMiddleware';
 
 const reduxMiddlewares = [thunk, apiMiddleware];
