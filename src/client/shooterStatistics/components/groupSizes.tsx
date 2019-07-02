@@ -17,7 +17,7 @@ const GroupSizes = ({ groupSizesData, isFetching }) => {
     const [distanceOptions, setDistanceOptions] = useState([] as string[]);
 
     useEffect(() => {
-        if (groupSizesData.length !== 0 && distanceOptions.length === 0) {
+        if (Object.keys(groupSizesData).length !== 0 && distanceOptions.length === 0) {
             const sortedDistanceOptions = Object.keys(groupSizesData).sort((a, b) => {
                 const regex = /^(\d+)\D?$/;
                 const distanceA = (a.match(regex) || [])[1];

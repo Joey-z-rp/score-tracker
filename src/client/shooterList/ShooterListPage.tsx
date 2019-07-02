@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { capitalizeEachWord } from '../../common/utils/string';
@@ -47,102 +48,99 @@ const CheckCircle = styled(CheckCircleIcon)`
     color: #28a745;
 `;
 
-class HomePage extends React.Component<any> {
-    componentDidMount() {
-        this.props.getAllShooters();
-    }
+const ShooterListPage = ({
+    getAllShooters,
+    history,
+    isFetchingShooters,
+    shooters,
+}) => {
+    useEffect(() => {
+        getAllShooters();
+    }, []);
+    
+    if (isFetchingShooters) return <CircularProgress />;
 
-    render() {
-        const {
-            history,
-            isFetchingShooters,
-            shooters,
-        } = this.props;
-        
-        if (isFetchingShooters) return <CircularProgress />;
+    const createShooterCard = (shooter: IConvertedShooter) => {
+        const createHeader = content => <Typography variant="h5">{content}</Typography>;
+        const createSubHeader = content => (
+            <Typography variant="body2" color="textSecondary" component="p">
+                {content}
+            </Typography>
+        );
+        const createStatus = (syncStatus: SyncStatus) => {
+            let title;
+            let icon;
 
-        const createShooterCard = (shooter: IConvertedShooter) => {
-            const createHeader = content => <Typography variant="h5">{content}</Typography>;
-            const createSubHeader = content => (
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {content}
-                </Typography>
-            );
-            const createStatus = (syncStatus: SyncStatus) => {
-                let title;
-                let icon;
+            switch (syncStatus) {
+                case SyncStatus.Succeeded:
+                    title = 'Succeeded';
+                    icon = <CheckCircle fontSize="large" />;
+                    break;
 
-                switch (syncStatus) {
-                    case SyncStatus.Succeeded:
-                        title = 'Succeeded';
-                        icon = <CheckCircle fontSize="large" />;
-                        break;
+                case SyncStatus.Failed:
+                    title = 'Failed';
+                    icon = <Error fontSize="large" color="error" />;
+                    break;
 
-                    case SyncStatus.Failed:
-                        title = 'Failed';
-                        icon = <Error fontSize="large" color="error" />;
-                        break;
+                case SyncStatus.Creating:
+                case SyncStatus.Synchronizing:
+                    title = 'In Progress';
+                    icon = <Autorenew fontSize="large" color="action" />;
+                    break;
 
-                    case SyncStatus.Creating:
-                    case SyncStatus.Synchronizing:
-                        title = 'In Progress';
-                        icon = <Autorenew fontSize="large" color="action" />;
-                        break;
-
-                    default:
-                        return;
-                }
-
-                return (
-                    <Tooltip title={title}>
-                        {icon}
-                    </Tooltip>
-                );
-            };
-            const createContentBlock = (header, subHeader) => (
-                <CardContent>
-                    {createHeader(header)}
-                    {createSubHeader(subHeader)}
-                </CardContent>
-            );
+                default:
+                    return;
+            }
 
             return (
-                <Card key={shooter.shooterId}>
-                    <CardActionArea onClick={() => history.push(`/shooter/${shooter.shooterId}`)}>
-                        <CardHeader
-                            avatar={
-                                <Avatar aria-label="avatar">
-                                    {(shooter.name || "").charAt(0).toUpperCase()}
-                                </Avatar>
-                            }
-                            subheader={`Shooter ID: ${shooter.shooterId}`}
-                            title={capitalizeEachWord(shooter.name)}
-                            titleTypographyProps={{ variant: 'h5' }}
-                        />
-                        {createContentBlock(shooter.defaultDiscipline, 'Discipline')}
-                        {createContentBlock(shooter.numberOfResult, 'Results')}
-                        {createContentBlock(
-                            convertToDisplayFormat(shooter.synchronizedAt),
-                            'Last Successful Sync',
-                        )}
-                        <CardContent>
-                            {createStatus(shooter.syncStatus)}
-                            {createSubHeader(`Updated at ${convertToDisplayFormat(shooter.updatedAt)}`)}
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
+                <Tooltip title={title}>
+                    {icon}
+                </Tooltip>
             );
         };
+        const createContentBlock = (header, subHeader) => (
+            <CardContent>
+                {createHeader(header)}
+                {createSubHeader(subHeader)}
+            </CardContent>
+        );
 
         return (
-            <Container maxWidth="lg">
-                <Typography variant="h2">Shooter List</Typography>
-                <Divider />
-                {shooters.map(shooter => createShooterCard(shooter))}
-            </Container>
+            <Card key={shooter.shooterId}>
+                <CardActionArea onClick={() => history.push(`/shooter/${shooter.shooterId}`)}>
+                    <CardHeader
+                        avatar={
+                            <Avatar aria-label="avatar">
+                                {(shooter.name || "").charAt(0).toUpperCase()}
+                            </Avatar>
+                        }
+                        subheader={`Shooter ID: ${shooter.shooterId}`}
+                        title={capitalizeEachWord(shooter.name)}
+                        titleTypographyProps={{ variant: 'h5' }}
+                    />
+                    {createContentBlock(shooter.defaultDiscipline, 'Discipline')}
+                    {createContentBlock(shooter.numberOfResult, 'Results')}
+                    {createContentBlock(
+                        convertToDisplayFormat(shooter.synchronizedAt),
+                        'Last Successful Sync',
+                    )}
+                    <CardContent>
+                        {createStatus(shooter.syncStatus)}
+                        {createSubHeader(`Updated at ${convertToDisplayFormat(shooter.updatedAt)}`)}
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         );
-    }
-}
+    };
+
+    return (
+        <Container maxWidth="lg">
+            <Typography variant="h2">Shooter List</Typography>
+            <Divider />
+            {shooters.map(shooter => createShooterCard(shooter))}
+        </Container>
+    );
+};
 
 const mapStateToProps = (state: IState) => ({
     isFetchingShooters: state.shooterList.isFetching,
@@ -153,4 +151,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     getAllShooters: () => dispatch(getAllShootersAction()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShooterListPage));

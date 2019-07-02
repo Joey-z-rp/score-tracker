@@ -26,9 +26,17 @@ export interface IConvertedShooter extends IShooter {
     createdAt: Date;
 }
 
+export interface IGroupSizeWithDate extends IGroupSize {
+    date: Date;
+}
+
+export interface IConvertedGroupSizes {
+    [key: string]: IGroupSizeWithDate[];
+}
+
 export interface IShooterStatistics {
     error: Error | null,
-    groupSizes: IGroupSize[],
+    groupSizes: IConvertedGroupSizes,
     isFetchingGroupSizes: boolean,
 }
 

@@ -29,23 +29,12 @@ const ShooterStatistics = ({
 
     if (isFetchingGroupSizes) return <CircularProgress />;
 
-    const convertedGroupSizes = groupSizes.map(groupSize =>({
-        ...groupSize,
-        groupSizeInMM: Number(groupSize.groupSizeInMM),
-    }))
-        .filter(groupSize => groupSize.groupSizeInMM !== 0)
-        .sort((a, b) => a.date - b.date).reduce((acc, groupSize) => {
-            if (!acc[groupSize.distance]) acc[groupSize.distance] = [];
-            acc[groupSize.distance].push({ ...groupSize, index: acc[groupSize.distance].length + 1});
-            return acc;
-        }, {});
-
     return (
         <Container maxWidth="lg">
             <Typography variant="h4">Shooter Statistics</Typography>
             <Typography variant="h5">Shooter Name placeholder</Typography>
             <Divider />
-            <GroupSizes groupSizesData={convertedGroupSizes} isFetching={isFetchingGroupSizes} />
+            <GroupSizes groupSizesData={groupSizes} isFetching={isFetchingGroupSizes} />
         </Container>
     );
 };
