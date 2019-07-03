@@ -59,7 +59,7 @@ function convertGroupSizes(groupSizes: IGroupSizeWithDate[]): IConvertedGroupSiz
             groupSizeInMM: Number(groupSize.groupSizeInMM),
         }))
         .filter(groupSize => groupSize.groupSizeInMM !== 0)
-        .sort((a, b) => a.date - b.date)
+        .sort((a, b) => +a.date - +b.date)
         .reduce((acc, groupSize) => {
             if (!acc[groupSize.distance]) acc[groupSize.distance] = [];
 
