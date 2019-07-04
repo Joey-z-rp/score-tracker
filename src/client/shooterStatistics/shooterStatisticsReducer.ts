@@ -53,14 +53,11 @@ export default function reducer(
 
 
 function convertGroupSizes(groupSizes: IGroupSizeWithDate[]): IConvertedGroupSizes {
-    return groupSizes
-        .map(groupSize => ({
-            ...groupSize,
-            groupSizeInMM: Number(groupSize.groupSizeInMM),
-        }))
-        .filter(groupSize => groupSize.groupSizeInMM !== 0)
-        .sort((a, b) => +a.date - +b.date)
+    return groupSizes.sort((a, b) => +a.date - +b.date)
         .reduce((acc, groupSize) => {
+            const groupSizeInMM = Number(groupSize.groupSizeInMM);
+            if (groupSizeInMM === 0) return acc;
+
             if (!acc[groupSize.distance]) acc[groupSize.distance] = [];
 
             acc[groupSize.distance].push({ ...groupSize, index: acc[groupSize.distance].length + 1});
