@@ -3,6 +3,9 @@ import {
     GET_GROUP_SIZES,
     GET_GROUP_SIZES_FAILURE,
     GET_GROUP_SIZES_SUCCESS,
+    GET_H_EYES,
+    GET_H_EYES_FAILURE,
+    GET_H_EYES_SUCCESS,
 } from './shooterStatisticsActions';
 import {
     IAction,
@@ -12,9 +15,12 @@ import {
 } from '../redux/types';
 
 const initialState = {
-    error: null,
     groupSizes: {},
+    groupSizesError: null,
+    hEyes: [],
+    hEyesError: null,
     isFetchingGroupSizes: false,
+    isFetchingHEyes: false,
 };
 
 export default function reducer(
@@ -27,7 +33,7 @@ export default function reducer(
             return {
                 ...state,
                 isFetchingGroupSizes: true,
-                error: null,
+                groupSizesError: null,
             };
 
         case GET_GROUP_SIZES_SUCCESS:
@@ -43,7 +49,28 @@ export default function reducer(
             return {
                 ...state,
                 isFetchingGroupSizes: false,
-                error: action.payload,
+                groupSizesError: action.payload,
+            };
+
+        case GET_H_EYES:
+            return {
+                ...state,
+                isFetchingHEyes: true,
+                hEyesError: null,
+            };
+
+        case GET_H_EYES_SUCCESS:
+            return {
+                ...state,
+                isFetchingHEyes: false,
+                hEyes: action.payload.map(hEye => convertDateString(hEye)),
+            };
+
+        case GET_H_EYES_FAILURE:
+            return {
+                ...state,
+                isFetchingHEyes: false,
+                hEyesError: action.payload,
             };
 
         default:

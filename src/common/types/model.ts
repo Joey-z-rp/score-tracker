@@ -22,3 +22,16 @@ export interface IGroupSize {
     groupSizeInMM: number;
     distance: string;
 }
+
+export interface IShootingResultDetail {
+    createdAt: string | Date;
+    resultXInMM: string;
+    resultYInMM: string;
+    resultNumber: string;
+    score: string;
+    shooterId: number;
+    shootingResultId: number;
+    shotTime: string;
+    temperature: string;
+    updatedAt: string | Date;
+}

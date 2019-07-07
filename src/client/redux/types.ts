@@ -1,6 +1,7 @@
 import {
-    IShooter,
     IGroupSize,
+    IShooter,
+    IShootingResultDetail,
 } from '../../common/types/model';
 
 export interface IAction {
@@ -34,10 +35,19 @@ export interface IConvertedGroupSizes {
     [key: string]: IGroupSizeWithDate[];
 }
 
+export interface IHEye extends IShootingResultDetail {
+    date: Date | string;
+    distance: string;
+    stage: number;
+}
+
 export interface IShooterStatistics {
-    error: Error | null,
     groupSizes: IConvertedGroupSizes,
+    groupSizesError: Error | null,
+    hEyes: IHEye[],
+    hEyesError: Error | null,
     isFetchingGroupSizes: boolean,
+    isFetchingHEyes: boolean,
 }
 
 export interface ISynchronizeState {

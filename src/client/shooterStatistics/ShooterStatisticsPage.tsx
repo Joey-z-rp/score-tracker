@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import GroupSizes from './components/groupSizes';
+import GroupSizes from './components/GroupSizes';
+import HEyes from './components/HEyes';
 import {
     getGroupSizes as getGroupSizesAction,
     getHEyes as getHEyesAction,
@@ -23,6 +24,7 @@ const ShooterStatistics = ({
     getGroupSizes,
     getHEyes,
     groupSizes,
+    hEyes,
     isFetchingGroupSizes,
     match,
 }) => {
@@ -40,12 +42,16 @@ const ShooterStatistics = ({
             <Typography variant="h5">Shooter Name placeholder</Typography>
             <Divider />
             <GroupSizes groupSizesData={groupSizes} isFetching={isFetchingGroupSizes} />
+            <Divider />
+            <Typography variant="h4">Hob's? eyes</Typography>
+            <HEyes hEyes={hEyes} />
         </Container>
     );
 };
 
 const mapStateToProps = (state: IState) => ({
     groupSizes: state.shooterStatistics.groupSizes,
+    hEyes: state.shooterStatistics.hEyes,
     isFetchingGroupSizes: state.shooterStatistics.isFetchingGroupSizes,
 });
 
