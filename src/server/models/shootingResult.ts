@@ -6,11 +6,13 @@ import {
 import { IGroupSize } from '../../common/types/model';
 import {
     DATE_KEY,
+    DISCIPLINE_KEY,
     DISTANCE_KEY,
     GROUP_SIZE_IN_MM_KEY,
     SHOOTER_ID_KEY,
     SHOOTING_RESULT_ID_KEY,
     SHOOTING_RESULTS_TABLE,
+    STAGE_KEY,
 } from '../../common/constants/database';
 
 export class ShootingResult {
@@ -49,5 +51,18 @@ export class ShootingResult {
             .where({ [SHOOTER_ID_KEY]: shooterId })
             .select([DATE_KEY, DISTANCE_KEY, GROUP_SIZE_IN_MM_KEY])
             .catch(attachInfoAndThrow('ShootingResult.getGroupSizes', arguments));
+    }
+
+    static getInfoForHEyes(shooterId: number): Promise<any[]> {
+        return pg(SHOOTING_RESULTS_TABLE)
+            .where({ [SHOOTER_ID_KEY]: shooterId })
+            .select([
+                DATE_KEY,
+                DISCIPLINE_KEY,
+                DISTANCE_KEY,
+                SHOOTING_RESULT_ID_KEY,
+                STAGE_KEY,
+            ])
+            .catch(attachInfoAndThrow('ShootingResult.getInfoForHEyes', arguments));
     }
 }

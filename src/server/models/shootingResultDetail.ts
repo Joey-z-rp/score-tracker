@@ -42,4 +42,11 @@ export class ShootingResultDetail {
         return pg(SHOOTING_RESULT_DETAILS_TABLE).select()
         .catch(attachInfoAndThrow('ShootingResultDetail.getAll', arguments));
     }
+
+    static getAllForShooter(shooterId: number): Promise<any[]> {
+        return pg(SHOOTING_RESULT_DETAILS_TABLE)
+            .select()
+            .where({ [SHOOTER_ID_KEY]: shooterId })
+            .catch(attachInfoAndThrow('ShootingResultDetail.getAllForShooter', arguments));
+    }
 }
