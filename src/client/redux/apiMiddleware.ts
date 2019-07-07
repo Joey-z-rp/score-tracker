@@ -6,17 +6,18 @@ const apiMiddleware = ({ getState, dispatch }) => next => action => {
     if (!action[CALL_API]) return next(action);
 
     const {
+        baseUrl = '/api',
         endpoint,
         onFailure = () => {},
         onSuccess = () => {},
         types,
     } = action[CALL_API];
-    console.log(types)
+    
     const [requestType, successType, failureType] = types;
 
     next({ type: requestType });
 
-    fetch(endpoint)
+    fetch(baseUrl + endpoint)
         .then(response => {
             next({
                 type: successType,

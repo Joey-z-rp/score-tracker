@@ -9,7 +9,10 @@ import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import GroupSizes from './components/groupSizes';
-import { getGroupSizes as getGroupSizesAction } from './shooterStatisticsActions';
+import {
+    getGroupSizes as getGroupSizesAction,
+    getHEyes as getHEyesAction,
+} from './shooterStatisticsActions';
 import { IState } from '../redux/types';
 
 const Divider = styled(DividerComponent)`
@@ -18,6 +21,7 @@ const Divider = styled(DividerComponent)`
 
 const ShooterStatistics = ({
     getGroupSizes,
+    getHEyes,
     groupSizes,
     isFetchingGroupSizes,
     match,
@@ -25,6 +29,7 @@ const ShooterStatistics = ({
     useEffect(() => {
         const shooterId = match.params.shooterId;
         getGroupSizes(shooterId);
+        getHEyes(shooterId);
     }, []);
 
     if (isFetchingGroupSizes) return <CircularProgress />;
@@ -46,6 +51,7 @@ const mapStateToProps = (state: IState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     getGroupSizes: (shooterId: number) => dispatch(getGroupSizesAction(shooterId)),
+    getHEyes: (shooterId: number) => dispatch(getHEyesAction(shooterId)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShooterStatistics));

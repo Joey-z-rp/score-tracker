@@ -77,6 +77,7 @@ async function getResultsAndScoreDetails(
         const scoreDetails = result.scoreDetails 
             ? result.scoreDetails.map(scoreDetail => ({
                 ...scoreDetail,
+                [SHOOTER_ID_KEY]: shooterId,
                 [SHOOTING_RESULT_ID_KEY]: resultIdsToFetch[index],
             }))
             : [];

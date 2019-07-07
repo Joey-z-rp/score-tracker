@@ -22,6 +22,12 @@ export class ShootingResult {
             .catch(attachInfoAndThrow('ShootingResult.batchCreate', arguments));
     }
 
+    static getAll(): Promise<any[]> {
+        return pg(SHOOTING_RESULTS_TABLE)
+        .select()
+        .catch(attachInfoAndThrow('ShootingResult.getAll', arguments));
+    }
+
     static getResultCount(shooterId: number): Promise<number> {
         return pg(SHOOTING_RESULTS_TABLE)
             .count(SHOOTING_RESULT_ID_KEY)
