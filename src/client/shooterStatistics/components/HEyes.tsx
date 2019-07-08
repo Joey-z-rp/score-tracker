@@ -13,6 +13,7 @@ import { convertToDisplayFormat } from '../../../common/utils/date';
 const HEyes = ({hEyes}) => {
     const [x, setX] = useState(null);
     const [y, setY] = useState(null);
+    const [distance, setDistance] = useState(null);
 
     return (
         <Paper>
@@ -27,17 +28,20 @@ const HEyes = ({hEyes}) => {
                         <TableCell align="right">Y(mm)</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody
+                    onMouseLeave={() => {
+                        setX(null);
+                        setY(null);
+                        setDistance(null);
+                    }}
+                >
                     {hEyes.map(hEye => (
                         <TableRow
                             hover
                             onMouseEnter={() => {
                                 setX(hEye.resultXInMM);
-                                setY(hEye.resultYInMM)
-                            }}
-                            onMouseLeave={() => {
-                                setX(null);
-                                setY(null);
+                                setY(hEye.resultYInMM);
+                                setDistance(hEye.distance);
                             }}
                             key={`${hEye.shootingResultId}:${hEye.resultNumber}`}
                         >
@@ -53,7 +57,7 @@ const HEyes = ({hEyes}) => {
                     ))}
                 </TableBody>
             </Table>
-            {x && y && <HEyeTooltip x={x} y={y} />}
+            {x && y && distance && <HEyeTooltip x={x} y={y} distance={distance} />}
         </Paper>
     );
 };

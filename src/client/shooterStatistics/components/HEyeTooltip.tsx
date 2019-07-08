@@ -1,15 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+import Target from './Target';
+
 import StickyTooltip from '../../UI/StickyTooltip';
 
 
-const HEyeTooltip = ({ x, y }) => {
+const HEyeTooltip = ({ distance, x, y }) => {
 
     return (
         <StickyTooltip>
-            x: {x}
-            y: {y}
+            <Target distance={distance} x={x} y={y} />
         </StickyTooltip>
     );
 };

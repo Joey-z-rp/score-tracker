@@ -2,9 +2,9 @@ import * as d3 from 'd3';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const GroupSizesChart = styled.div`
     svg {
