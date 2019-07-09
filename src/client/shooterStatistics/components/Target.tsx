@@ -3,7 +3,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 
-import { BULL_RING_RADIUS } from '../../../common/constants/target';
+import {
+    BULL_RING_RADIUS,
+    CENTER_RING_RADIUS,
+    SUPER_V_RADIUS,
+} from '../../../common/constants/target';
 
 const SVGContainer = styled.div`
     svg {
@@ -34,16 +38,18 @@ function draw(x, y, distance) {
     const centerX = calculatedWidth / 2;
     const centerY = calculatedHeight / 2;
     d3.selectAll('#hEyeTargetSvg').remove();
+    
+    const ringsToInclude = [SUPER_V_RADIUS, CENTER_RING_RADIUS, BULL_RING_RADIUS];
 
-    const bullRingDimension = {
-        inner: BULL_RING_RADIUS[distance].inner,
-        outer: BULL_RING_RADIUS[distance].outer,
-    };
+    const targetRings = ringsToInclude.map(ring => ({
+        inner: ring[distance].inner,
+        outer: ring[distance].outer,
+    }));
 
-    const targetRings = [bullRingDimension];
+    const outmostRing = targetRings[targetRings.length - 1];
 
     const scale = d3.scaleLinear()
-        .domain([0, bullRingDimension.outer]).range([0, (width - rangeMargin) / 2]);
+        .domain([0, outmostRing.outer]).range([0, (width - rangeMargin) / 2]);
 
     const dataGroup = d3.select('#hEyeTarget').append('svg')
         .attr('id', 'hEyeTargetSvg')
